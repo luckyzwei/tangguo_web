@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+
+<style>
+*{ padding:0; margin:0; font-size:12px; text-decoration:none;}
+li{ list-style:none;}
+.none{display:none;}
+.textarea_small{
+	height:45px;width:800px;
+}
+.textarea_middle{
+	height:90px;width:800px;
+}
+.tr_title{
+	background:#ecf5ff;
+	height:28px;
+}
+.tr_title b{
+	color:#444;
+}
+body{
+	color:#444;
+}
+.mini-wrap h3, .mini-content h3{
+	height:40px;
+	padding-left:10px;
+	line-height:40px;
+	background-color:#ecf5ff;
+}
+.mini-wrap ul {
+	margin-bottom:10px;
+	background-color:#f1f1f1;
+	padding-top:10px;
+}
+.mini-wrap ul li{
+	height:30px;
+}
+.mini-wrap .m-w-des{
+	width:100px;
+	height:30px;
+	line-height:30px;
+	display:block;
+	float:left;
+	text-align:right;
+}
+.mini-wrap ul li .m-w-delbtn{
+	margin-top:9px;
+	display:block;
+	float:left;
+	margin-left:10px;
+}
+ .mini-wrap .m-w-addbtn {
+	width:40px;
+	height:25px;
+	display:block;
+	line-height:25px;
+	float:left;
+	background-color:#ccc;
+	text-align:center;
+	margin-top:2px;
+	margin-left:10px;
+	color:#333;
+}
+.mini-wrap .m-w-addbtn{
+	margin-left:20px;
+	width:100px;
+	float:none;
+}
+.mini-wrap ul li .m-w-delbtn:hover, .mini-wrap .m-w-addbtn:hover , .uploadbtn:hover, .updiv p a:hover{
+	background-color:#09f;
+	color:#fff;
+}
+
+.mini-wrap input{
+	float:left;
+	margin-top:6px;
+	margin-right:10px;
+}
+.formbtn{
+	height:30px;
+	width:80px;
+	line-height:20px;
+	margin-left:200px;
+	float:left;
+}
+.uploadbtn{
+	float:left;
+	line-height:25px;
+	padding:0px 5px;
+	color:#333;
+	background-color:#ccc;
+	margin-right:10px;
+
+}
+.updiv{
+	width:600px;
+	height:290px;
+	background-color:#fff;
+	position:absolute;
+	left:50%;
+	top:50%;
+	display:none;
+	margin-left:-300px;
+	margin-top:-145px;
+	border:1px #ccc solid;
+}
+.updiv p{
+	height:30px;
+	line-height:30px;
+	border-bottom:1px #ccc solid;
+	padding-left:10px;
+	background-color:#ecf5ff;
+	position:relative;
+}
+.updiv p a{
+	position:absolute;
+	right:5px;
+	top:3px;
+	line-height:24px;
+	padding:0px 5px;
+	color:#333;
+	background-color:#ccc;
+}
+.imgview{
+	position:absolute;
+	width:200px;
+	height:200px;
+	display:none;
+	background-color:#fff;
+}
+.imgview img {
+	width:100%;
+	height:100%;
+}
+#cateParent, #imageParent, #textParent{
+	padding-bottom:10px;
+}
+#imageParent {
+	background-color:#F5F5F5;
+}
+#textParent {
+	background-color:#FFFFFE;
+}
+.inptext{
+	width:600px;
+	padding:3px 0;
+}
+.navbtn{
+	float:right;
+	margin-right:20px;	
+}
+</style>
+</head>
+<body>
+<div class="info2" id="wrap">
+	<form method="post" name="baseForm" action="<?php echo $this->mRouter->getCtrlActUrl()?>" enctype="multipart/form-data" onsubmit="return Mini.onsubmit()">
+		<div class="mini-wrap" id="textParent">
+			<h3>迷你文本设置</h3>
+			<?php
+				if (isset($miniData['text'])) {
+					foreach ($miniData['text'] as $item) {
+						$checked = '';
+						if ($item['isLocal'] == '1') {
+							$checked = ' checked="checked" ';
+						}
+						$headCheck = '';
+						if ($item['isHead'] == '1') {
+							$headCheck = ' checked="checked" ';
+						}
+						echo '<ul class="item">';
+						echo '<li><span class="m-w-des">文本标题：</span><input class="inptext" type="text" value="' . $item['text'] . '" name="miniData[text][text][]"/></li>';
+						echo '<li><span class="m-w-des">文本链接：</span><input class="inptext" type="text" value="' . $item['link'] .'" name="miniData[text][link][]"/></li>';
+						echo '<li><span class="m-w-des">是否软件打开：</span><input type="checkbox" value="' . $item['isLocal'] . '" name="miniData[text][isLocal][]"'. $checked . '  onclick="Mini.checkOnClick(event)"/></li>';
+						echo '<li><span class="m-w-des">是否设为标题：</span>';
+						echo '<input type="checkbox" value="' . $item['isHead'].  '" name="miniData[text][isHead][]"' . $headCheck . ' onclick="Mini.checkOnClick(event)"/>';
+						echo '<a href="#" class="m-w-delbtn" id="delTextBtn" name="delTextBtn">删除</a></li>';
+						echo '</ul>';
+					}
+				}
+			?>
+			<a href="#" class="m-w-addbtn" id="addTextBtn">添加</a>
+		</div>
+	
+		<div class="mini-wrap" id="imageParent">
+			<h3>迷你图片设置</h3>
+			<?php
+				if (isset($miniData['poster'])) {
+					foreach ($miniData['poster'] as $item) {
+						$checked = '';
+						if ($item['isLocal'] == '1') {
+							$checked = ' checked="checked" ';
+						}
+						$url = $item['url'];
+					
+						echo '<ul class="item">';
+						echo '<li><span class="m-w-des">图片标题：</span><input class="inptext" type="text" value="'. $item['text'] .'" name="miniData[poster][text][]"/></li>';
+						echo '<li><span class="m-w-des">图片地址：</span><input class="inptext" type="text" value="'. $url .'" name="miniData[poster][url][]"/><a id="uploadBtn" name="uploadBtn" href="#" class="uploadbtn">我要上传图片</a><a href="javascript:;" class="uploadbtn" onmouseover="Mini.checkView(event)" onmouseout="Mini.imgNone()" _url="'. $url .'">查看</a></li>';
+						echo '<li><span class="m-w-des">图片链接：</span><input class="inptext" type="text" value="'. $item['link'] .'" name="miniData[poster][link][]"/></li>';
+						echo '<li><span class="m-w-des">是否软件打开：</span>';
+						echo '<input type="checkbox" value="'. $item['isLocal'] .'" name="miniData[poster][isLocal][]"'. $checked .' onclick="Mini.checkOnClick(event)"/>';
+						echo '<a href="#" class="m-w-delbtn" id="delImageBtn" name="delImageBtn">删除</a></li>';
+						echo '</ul>';
+					}
+				}
+			?>
+			<a href="#" class="m-w-addbtn" id="addImageBtn">添加</a>
+		</div>
+
+		<div class="mini-wrap" id="cateParent" style="display:none;">
+			<h3>导航标签设置</h3>
+			<?php
+				if (isset($miniData['cate'])) {
+					$isClass = true;
+					foreach ($miniData['cate'] as $item) {
+						$checked = '';
+						if ($item['isLocal'] == '1') {
+							$checked = ' checked="checked" ';
+						}
+						echo '<ul class="item">';
+						echo '<li><span class="m-w-des">标签标题：</span><input class="inptext" type="text" value="' . $item['text'] . '" name="miniData[cate][text][]"/></li>';	
+						echo '<li><span class="m-w-des">标签地址：</span><input class="inptext" type="text" value="' . $item['url'] . '" name="miniData[cate][url][]"/></li>';
+						echo '<li><span class="m-w-des">标签链接：</span><input class="inptext" type="text" value="' . $item['link'] . '" name="miniData[cate][link][]"/></li>';
+						echo '<li><span class="m-w-des">是否软件打开：</span>';
+						echo '<input type="checkbox" value="' . $item['isLocal']. '" name="miniData[cate][isLocal][]"'. $checked .' onclick="Mini.checkOnClick(event)"/>';
+						echo '<a href="#" class="m-w-delbtn" id="delCateBtn" name="delCateBtn">删除</a></li>';
+						echo '</ul>';
+					}
+				}
+			?>
+			<a href="#" class="m-w-addbtn" id="addCateBtn">添加</a>
+		</div>
+		<div>
+			<input type="submit" class="formbtn" value="确定修改" />
+			<input type="button" class="formbtn navbtn" id="navBtn" value="导航设置" />
+		</div>
+	</form>
+	<div class="updiv" id="uploadParent">
+		<p>请选择图片<a href="#" id="closeBtn">关闭</a></p>
+		<iframe src="?s=video/upload" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="320"></iframe>
+	</div>
+	<div class="imgview" id="imgView"></div>
+</div>
+<script>
+(function(){
+	var Mini = 
+	{
+		init : function(addBtn, strHtml, delBtnName, parent)
+		{
+			var delAction = function()
+			{
+				var domBtns = document.getElementsByName(delBtnName);
+				for (var i = 0; i < domBtns.length; i++) {
+					domBtns[i].onclick = function()
+					{
+						event.returnValue = false;
+						parent.removeChild(this.parentNode.parentNode);
+					}
+				}
+				
+				var domUploadBtns = document.getElementsByName('uploadBtn');
+				$F.each(domUploadBtns, function(domBtn){
+					domBtn.onclick = function()
+					{
+						event.returnValue = false;
+						$A('uploadParent').style.display = 'block';
+						$A('uploadParent').style.top = $D.pageRect(domBtn.parentNode.parentNode).top;
+						$A('uploadParent').innerHTML = '<p>请选择图片<a href="#" id="closeBtn">关闭</a></p><iframe src="?s=video/upload" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="250px;"></iframe>';
+						$A('closeBtn').onclick = function()
+						{
+							event.returnValue = false;
+							$A('uploadParent').style.display = 'none';
+							$A('uploadParent').innerHTML = '';
+						}
+					}
+				});
+			}
+			addBtn.onclick = function()
+			{
+				event.returnValue = false;
+				var domUl = document.createElement('ul');
+				domUl.className = 'item';
+				domUl.innerHTML = strHtml;
+				parent.insertBefore(domUl, addBtn);
+				delAction();
+			}
+			delAction();
+		},
+		checkOnClick : function(event)
+		{
+			var domCheckBox = event.target || event.srcElement;
+			if (domCheckBox.checked) {
+				domCheckBox.value = '1';
+			} else {
+				domCheckBox.value = '0';
+			}
+		},
+		onsubmit : function()
+		{
+			if (!confirm('确定要修改嘛？')) {
+				return false;
+			}
+			var domImageLocalBoxs = document.getElementsByName('miniData[poster][isLocal][]'),
+				domCateLocalBoxs = document.getElementsByName('miniData[cate][isLocal][]'),
+				domTextLocalBoxs = document.getElementsByName('miniData[text][isLocal][]'),
+				domTextHeadBoxs = document.getElementsByName('miniData[text][isHead][]');
+			
+			$F.each([domImageLocalBoxs, domTextLocalBoxs, domTextHeadBoxs, domCateLocalBoxs], function(itemBoxs){
+				$F.each(itemBoxs, function(box){
+					if (!box.checked) {
+						box.checked = true;
+						box.value = '0';
+					}
+				});
+			});
+			return true;
+		},
+		checkView : function(event)
+		{
+			var obj = event.target || event.srcElement;
+			$A('imgView').style.display = 'block';
+			$A('imgView').style.top = $D.pageRect(obj).top;
+			$A('imgView').style.left = $D.pageRect(obj).left + 35 + 'px';
+			$A('imgView').innerHTML = '<img src="' + obj.getAttribute('_url') + '"/>';
+		},
+		imgNone : function()
+		{
+			$A('imgView').style.display = 'none';
+			$A('imgView').innerHTML = '';
+		}
+	};
+	var strImageHtml = '<li><span class="m-w-des">图片标题：</span><input type="text" value="" name="miniData[poster][text][]"/></li>';
+		strImageHtml += '<li><span class="m-w-des">图片地址：</span><input class="inptext" type="text" value="" name="miniData[poster][url][]"/><a id="uploadBtn" name="uploadBtn" href="#" class="uploadbtn">我要上传图片</a></li>';
+		strImageHtml += '<li><span class="m-w-des">图片链接：</span><input class="inptext" type="text" value="" name="miniData[poster][link][]"/></li>';
+		strImageHtml += '<li><span class="m-w-des">是否软件打开：</span><input type="checkbox" value="0" name="miniData[poster][isLocal][]" onclick="Mini.checkOnClick(event)"/><a href="#" class="m-w-delbtn" id="delImageBtn" name="delImageBtn">删除</a></li>';
+	
+	var strTextHtml = '<li><span class="m-w-des">文本标题：</span><input class="inptext" type="text" value="" name="miniData[text][text][]"/></li>';
+		strTextHtml += '<li><span class="m-w-des">文本链接：</span><input class="inptext" type="text" value="" name="miniData[text][link][]"/></li>';
+		strTextHtml += '<li><span class="m-w-des">是否软件打开：</span><input type="checkbox" value="0" name="miniData[text][isLocal][]" onclick="Mini.checkOnClick(event)"/></li>';
+		strTextHtml += '<li><span class="m-w-des">是否设为标题：</span><input type="checkbox" value="0" name="miniData[text][isHead][]" onclick="Mini.checkOnClick(event)"/><a href="#" class="m-w-delbtn" id="delTextBtn" name="delTextBtn">删除</a></li>';
+		
+	var strCateHtml = '<li><span class="m-w-des">标签标题：</span><input class="inptext" type="text" value="" name="miniData[cate][text][]"/></li>';
+		strCateHtml += '<li><span class="m-w-des">标签地址：</span><input class="inptext" type="text" value="" name="miniData[cate][url][]"/></li>';
+		strCateHtml += '<li><span class="m-w-des">标签链接：</span><input class="inptext" type="text" value="" name="miniData[cate][link][]"/></li>';
+		strCateHtml += '<li><span class="m-w-des">是否软件打开：</span>';
+		strCateHtml += '<input type="checkbox" value="0" name="miniData[cate][isLocal][]" onclick="Mini.checkOnClick(event)"/>';
+		strCateHtml += '<a href="#" class="m-w-delbtn" id="delCateBtn" name="delCateBtn">删除</a></li>';	
+			
+	Mini.init($A('addImageBtn'), strImageHtml, 'delImageBtn', $A('imageParent'));
+	Mini.init($A('addTextBtn'), strTextHtml, 'delTextBtn', $A('textParent'));
+	Mini.init($A('addCateBtn'), strCateHtml, 'delCateBtn', $A('CateParent'));
+
+	window.Mini = Mini;
+})();
+
+$E.addEvent($A('navBtn'), 'click', function(){
+	domNavParent = $A('cateParent');
+	if (domNavParent.style.display == 'block') {
+		domNavParent.style.display = 'none';
+	} else {
+		domNavParent.style.display = 'block';
+	}
+			
+});
+</script>
+</body>
+</html>

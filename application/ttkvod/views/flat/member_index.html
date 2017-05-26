@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="gb2312">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit|ie-stand" />
+	<title>会员中心-{$this->mSiteCfg['site_name']}</title>
+
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/themes/css/non-responsive.css" rel="stylesheet">
+	<link href="/themes/css/index.css" rel="stylesheet">
+
+	<!--[if lt IE 9]>
+	  <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+	
+<body>
+	
+	{layout head_nav}
+	<div class="container">
+		
+		<h4>播放记录</h4>
+		<div id="playlist">正在加载...</div>
+		
+	</div>
+	
+	{layout bottom_f}
+	
+	<div id="tips" class="tips"></div>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="//cdn.bootcss.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+	<script src="/themes/js/config.js"></script>
+	<script src="/themes/js/index.js"></script>
+	<script>
+		BC.action.index();
+	</script>
+</body>
+</html>

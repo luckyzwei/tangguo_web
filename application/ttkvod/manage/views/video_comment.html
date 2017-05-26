@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<style> 
+.input_text{
+	width:30px;
+}
+ul,ul li{
+	list-style:none;
+}
+.msg {
+	margin-top:10px;
+}
+.msg li{
+	margin-bottom:10px;
+	margin-left:15px;
+	margin-right:15px;
+	border: 1px solid #ccc;
+}
+.msg li .title{
+	height:25px;
+	font-size:14px;
+	background:#eee;
+	line-height:25px;
+	padding-left:15px;
+	border-bottom:1px solid #ccc;
+	color:#444;
+	position:relative;
+}
+.date{
+	font-size:12px;
+	margin-left:10px;
+	color:#999;
+}
+.msg li .content{
+	line-height:22px;
+	padding-left:15px;
+	color:#666;
+}
+a.repeat{
+	position:absolute;
+	right:10px;
+	top:2px;
+	font-size:12px;
+}
+a.dele{
+	position:absolute;
+	right:70px;
+	top:2px;
+	font-size:12px;
+}
+a.show{
+	position:absolute;
+	right:90px;
+	top:2px;
+	font-size:12px;	
+}
+a.status{
+	position:absolute;
+	right:150px;
+	top:2px;
+	font-size:12px;	
+}
+.sNone{
+	height:50px;
+	line-height: 50px;
+	text-indent:20px;
+}
+.updateDiago{
+	width:400px;
+	border:2px solid #ccc;
+	background:#fff;
+}
+.updateDiago p{
+	margin:auto 5px;
+	color:#444;
+}
+</style>
+</head>
+<body>
+<div id="rightTop" style="height:85px;">
+	<p>评论管理</p>
+	<ul class="subnav">
+		<li><span>管理</span></li>
+	</ul>
+	<p style="clear:both;">
+		<form name="search">
+			指定影片ID：<input type="text" name="vid" value="{$vid}" size="10"/>
+			内容：<input type"text" name="cont" value="{$content}"/>
+			IP: <input type="text" name="ip" value="{$ip}" />
+			用户名：<input type="text" name="name" value="{$username}"/>
+			<input type="submit" class="formbtn" value="搜索"/>
+		</form>	
+		<script>Router.bindForm(true, 'video', 'comment', document.search)</script>
+	</p>
+</div>
+<ul class="msg">
+	<form name="deleform" action="<?php echo $this->mRouter->urlEx('video', 'commdele')?>" method="post">
+	{tag:Lamb_View_Tag_List prepare_source='@$aPrepareSource@' id='list' sql='@$sql@' is_page='1' page='@$page@' cache_time='-1' pageSize='20' empty_str='<li class="sNone">对不起，暂无留言</li>'}
+		<li>
+		<div class="title"><input type="checkbox" name="id[]" value="{field.id}|{field.vedioid}"/>&nbsp;<a href="{field.username function="Ttkvod_Utils::U(array('name' => @this), 'comment', 'video')"}">{field.username}</a><span class="date">{field.time function="date('Y-m-d H:i:s',@this)"}</span> <span class="date"><font style="color:#444">IP：</font>{field.ip}</span><a class="dele" onclick="return confirm('确定删除吗？')" href="{field.id function="Ttkvod_Utils::U(array('id' => @this . '|' . @me['vedioid']), 'commdele', 'video')"}">删除</a> <a class="repeat" href="{field.vedioid function="Ttkvod_Utils::U(array('keywords' => @this, 'query' => 'vedioid'), '', 'video')"}">查看影片</a></div>
+		<p class="content">{field.content}</p>
+		</li>
+	{/tag:Lamb_View_Tag_List}
+	</form>
+		{tag:Lamb_View_Tag_Page listid='list'}
+			<li style="border:none;"><div id="pageDiv"><span class="msg"><a href="javascript:checkAll('id[]')">全
+选</a> <a href="javascript:confirm('确定删除吗?')?document.deleform.submit():void(0)">删除</a> 共#num#条数据 当前#currentPage#页</span><span class="page"><a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span></span></div></li>
+		{/tag:Lamb_View_Tag_Page}
+</ul>
+<iframe name="opFrame" id="opFrame" height="0" width="0"></iframe>
+</body>
+</html>

@@ -1,0 +1,39 @@
+					<div class="v-i-head">
+						<a id="h-advice-user" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'advice'))?>" class="cur">我的反馈</a>
+						<a id="h-u-advice" href="#" >意见反馈</a>
+					</div>
+					<div class="v-want">
+						<div id="v-t-advice" name="v-t-advice">
+							<ul class="v-w-list" >
+								{tag:Lamb_View_Tag_List sql='@$sql@' is_page='1' page='@$page@' pagesize='10' empty_str='<li class="v-i-none">对不起，您还没有发布反馈信息</li>' id='list'}
+									<li class="line">
+										<div class="l-body">
+											<p><span class="t">反馈日期：{field.date function="date('Y-m-d H:i:s',@this)"}</p>
+											<p><span class="t">反馈信息：</span>{field.content function="empty(@this) ? '无' : @this"}</p>
+											<p><span class="t">回复信息：</span>{field.reply function="empty(@this) ? '暂无回复' : @this"}</p>
+										</div>
+									</li>
+								{/tag:Lamb_View_Tag_List}
+							</ul>
+							
+							<div class="v-i-page">
+								{tag:Lamb_View_Tag_Page listid='list'}
+								<span>共#num#条数据</span>
+								<a href="@$firstPageUrl@" hideFocus="true">首页</a>
+								{pageitem focus='<a href="@$pageUrl@" class="v-i-p-cur">#page#</a>' nofocus='<a href="@$pageUrl@">#page#</a>'}
+								<a href="@$lastPageUrl@" hideFocus="true">尾页</a>
+								{/tag:Lamb_View_Tag_Page}
+							</div>
+						</div>
+						<div class="v-edit" id="v-w-advice" name="v-w-advice" style="display: none;">
+							<form name="send_frm" method="post" action="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'advice'))?>" target="opframe">
+								<ul>
+									<li class="line">欢迎提出您在使用天天看中遇到的问题或宝贵建议，感谢您对天天看的支持。</li>
+									<li class="line2 t"><textarea id="v-content" name="content"></textarea></li>
+									<li class="line t">
+										<input type="submit" value="提交" class="sub" />
+									</li>	
+								</ul>
+							</form>
+						</div>
+					</div>

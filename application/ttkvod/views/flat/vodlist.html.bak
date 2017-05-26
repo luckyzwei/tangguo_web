@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="gb2312">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit|ie-stand" />
+	<title>{$topTypeInfos['name']}_{$this->mSiteCfg['site_name']}</title>
+
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="themes/css/non-responsive.css" rel="stylesheet">
+	<link href="themes/css/index.css" rel="stylesheet">
+
+	<!--[if lt IE 9]>
+	  <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+	
+<body>
+	
+	{layout head_nav}
+	<div class="container container-1000">
+		
+		<div class="row row-margin">
+			<div class="col-md-9">
+				<div class="row row-margin">
+					
+					<ul class="nav nav-tabs col-md-12">
+						<li <?php if($order=='0'){?>class="active"<?php }?>>
+							<a href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 0, 'area' => $area, 'tag' => $tag, 'year' => $year))?>" >按更新</a>
+							
+						</li>
+						<li <?php if($order=='3'){?>class="active"<?php }?>>
+							<a href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 3, 'area' => $area, 'tag' => $tag, 'year' => $year))?>" >周人气</a>
+						</li>
+						<li <?php if($order=='4'){?>class="active"<?php }?> >
+							<a href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 4, 'area' => $area, 'tag' => $tag, 'year' => $year))?>" >月人气</a>
+						</li>
+						<li <?php if($order=='1'){?>class="active"<?php }?>>
+							<a href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 1, 'area' => $area, 'tag' => $tag, 'year' => $year))?>" >总人气</a>
+						</li>
+						<li class="top-next-btn" ><a href="#" id="btn_next_page" p="{$page}">下一页</a></li>	
+					</ul>
+					
+				</div>
+				
+				<div class="row">
+					<div class="tab-content col-md-12">
+						 <div role="tabpanel" class="tab-pane active" id="mv-update-time">
+						 	<ul class="tab-ul-list clearfix">
+							<!-- movie item -->
+							{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' is_page='1' pagesize='24' page='@$page@' empty_str='<li class="l-m-none">对不起，未找到影片资源，请重选条件</li>' prepare_source='@$aPrepareSource@' id='list'}
+								<li>
+									<a class="middle-pic" title="{field.name}" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">
+							  		<img class="img-responsive" src="themes/images/blank.gif"  data-original="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>
+							  			<span class="movie-mark"><strong>{field.point function="sprintf('%0.1f', @this)"}</strong>{field.mark}</span>
+							  		</a>
+							  		<p class="middle-pic-text"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+							  		<p class="actor">
+							  			{field.actors function="Ttkvod_Utils::randerTag(@this, 0, false)"}
+							  		</p>
+								</li>
+							{/tag:Lamb_View_Tag_List}
+							<!--/movie item -->
+							</ul>
+						 </div>
+					</div>
+				</div>
+				
+				<nav>
+				  <ul class="pagination">
+				  	{tag:Lamb_View_Tag_Page listid='list'}	
+				  	<li><a href="@$firstPageUrl@" title="首页"><i class="glyphicon glyphicon-step-backward"></i></a></li>
+					<li><a href="@$prevPageUrl@" title="上一页 快捷键←" aria-label="Previous"><i aria-hidden="true" class="glyphicon glyphicon-backward"></i></a></li>
+
+					{pageitem focus='<li class="active"><a>#page#</a></li>' nofocus='<li><a href="@$pageUrl@">#page#</a></li>'}
+
+					<li><a href="@$nextPageUrl@" title="下一页 快捷键→" aria-label="Next"><i aria-hidden="true" class="glyphicon glyphicon-forward"></i></a></li>
+					<li><a href="@$lastPageUrl@" title="尾页"><i class="glyphicon glyphicon-step-forward"></i></a></li>
+					{/tag:Lamb_View_Tag_Page}	
+				 </ul>
+			   </nav>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="category-right clearfix">
+					<p>类型</p>
+					<dl>
+						<dd><a router='static'<?php if(empty($tag)){?> class="current"<?php }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'area' => $area, 'order' => $order, 'year' => $year)) ?>">全部</a></dd>
+						<?php foreach ($currentSearchIndex['types'] as $type) {
+							$_type = $type;
+							if ($type == '音乐MV') {
+								$type = '音乐';
+							}
+							if ($type == '综艺其它') {
+								$type = '综艺';
+							}
+							$class = '';
+							if ($_type == $tag) {
+								$class = ' class="current"';
+							}
+							$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $type, 'p' => 1, 'area' => $area, 'year' => $year, 'order' => $order));
+						?>
+							<dd><a router='static' title="{$type}" href="{$link}"{$class}>{$type}</a></dd>
+						<?php }?>
+					</dl>
+				</div> 
+				
+				<div class="category-right clearfix">
+					<p>地区</p>
+					<dl>
+						<dd><a router='static'<?php if(empty($area)){?> class="current"<?php }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'order' => $order, 'year' => $year))?>">全部</a></dd>
+							<?php foreach ($currentSearchIndex['areas'] as $item) { 
+								$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'area' => $item, 'year' => $year, 'order' => $order));
+								$class = '';
+								if ($item == $area) {
+									$class = ' class="current"';
+								}
+							?>
+						<dd><a router='static' href='{$link}'{$class}>{$item}</a></dd>
+						<?php }?>					
+					</dl>
+				</div>
+				
+				<div class="category-right-year clearfix">
+					<p>年份</p>
+					<dl>
+						<dd>
+							<a router='static'<?php if(empty($year)){?> class="current"<?php }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'order' => $order, 'area' => $area))?>">全部</a></dd>
+							<?php foreach ($currentSearchIndex['years'] as $item) { 
+								$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'area' => $area, 'year' => $item, 'order' => $order));
+								$class = '';
+								if ($item == $year) {
+									$class = ' class="current"';
+								}
+							?>	
+							<dd><a router='static' href='{$link}'{$class}>{$item}</a></dd>
+							<?php }?>		
+					</dl>
+				</div>	
+				
+				<!--
+                	ads
+                -->
+				<div class="movie-list-ad">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="tips" class="tips"></div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+<script src="themes/js/config.js"></script>
+<script src="themes/js/index.js"></script>
+<script>
+	BC.action.index();
+</script>
+</body>
+</html>

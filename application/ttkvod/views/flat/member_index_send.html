@@ -1,0 +1,25 @@
+	<div class="v-edit">
+		<form name="send_frm" method="post" action="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'send'))?>" target="opframe">
+			<ul>
+				<li class="line">影片名称：<input name="sendData[name]" type="text" class="s1"/><span class="s4">*</span></li>
+				<li class="line">
+					影片分类：<select name="sendData[type]">
+						<option value="">请选择分类</option>
+						<option value="1">电影</option>
+						<option value="2">电视剧</option>
+						<option value="3">综艺</option>
+						<option value="4">动漫</option>
+					</select><span class="s4">*</span>
+				</li>
+				<li class="line">影片演员：<input type="text" name="sendData[actor]" class="s1" /> 多个演员用逗号或空格隔开</li>
+				<li class="line">影片导演：<input type="text" name="sendData[dircetor]" class="s1" /> 多个导演用逗号或空格隔开</li>
+				<li class="line">影片地区：<input type="text" name="sendData[area]" class="s2 s1" /></li>
+				<li class="line">影片图片：<input type="text" name="sendData[pic]" value="http://" class="s3 s1"/> 远程图片链接地址</li>
+				<li class="line2">影片简介：<textarea name="sendData[content]"></textarea><span class="s4 s1">*</span></li>
+				<li class="line2">影片地址：<textarea name="sendData[playData]" ></textarea><span class="s4 s1">*</span>允许多个以http://开头的地址</li>
+				<li class="line">
+					<input type="submit" value="提交" class="sub" onMouseOver="this.className='subcur sub'" onMouseOut="this.className='sub'"/>
+				</li>
+			</ul>
+		</form>
+	</div>

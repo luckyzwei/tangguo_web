@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<title>天天看_直播</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/list.css" rel="stylesheet">
+<meta name="robots" content="nofollow">
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>TTK.pub()</script>
+</head>
+<body>
+<div class="w1180 clear no_left_menu">
+	{layout head_nav}
+	<div class="wrap">
+		{layout head_f}
+		<div class="frame" id="i_w_f">
+			<iframe name="opFrame" id="opFrame" height="620px" width="100%" src="{$path}" frameborder="0"></iframe>
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+					<div class="v-i-head">
+						<a id="v-u-center" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member'))?>" class="cur">个人中心</a>
+						<a href="#" id="v-u-sort" >等级排名</a>
+					</div>
+					
+				
+					<div id="v-u-msg" name="v-u-msg" class="v-user">
+						<ul>
+							<li><span>用户：</span><span class="v-default">{$_SESSION['_USERNAME_']}</span></li>
+							<li><span>等级：</span><span  class="v-default">LV{$level}</span></li>
+							<li><span>最后一次登录时间：</span><span class="v-default">{$_SESSION['_LLOGINTIME']}</span></li>
+							<li><span>最后一次登录IP：</span><span class="v-default">{$_SESSION['_LLOGINIP']}</span></li>
+						</ul>
+						
+						<div class="v-u-litimg clear">
+							<div class="u-l-fav">
+								<p class="h">
+									<a class="h-l" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'fav'))?>">我的收藏</a>
+									<a class="h-r" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'fav'))?>">更多</a>
+								</p>
+								<ul class="b">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$favsql@' limit="4" empty_str='<p class="b-none">暂无收藏</p>'}
+									<li>
+										<a href="{field.vedioId function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.vedioName}">{field.vedioName}</a>
+										<span class="b-date">{field.date function="date('Y-m-d',strtotime(@this))"}</span>
+									</li>
+									{/tag:Lamb_View_Tag_List}
+								</ul>
+							</div>
+							<div class="u-l-updatelist">
+								<p class="h">
+									<a class="h-l" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'updatelist'))?>">通知管理</a>
+									<a class="h-r" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'updatelist'))?>">更多</a>
+								</p>
+								<ul class="b">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$updateListSql@' limit="4" empty_str='<p class="b-none">暂无通知</p>' }
+									<li>
+										<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}">{field.name}</a>
+										<span class="b-date">{field.time function="date('Y-m-d',@this)"}</span>
+									</li>
+									{/tag:Lamb_View_Tag_List}
+								</ul>
+							</div>
+							<div class="u-l-want">
+								<p class="h">
+									<a class="h-l" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'want'))?>">求片管理</a>
+									<a class="h-r" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'want'))?>">更多</a>
+								</p>
+								<ul class="b">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$wantSql@' limit="4" empty_str='<p class="b-none">对不起，您还没有发布想看的电影</p>' }
+									<li>
+										{field.vname}
+										<span class="b-date">{field.date function="date('Y-m-d',@this)"}</span>
+									</li>
+									{/tag:Lamb_View_Tag_List}
+								</ul>
+							</div>
+							
+							<div class="u-l-advice">
+								<p class="h">
+									<a class="h-l" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'advice'))?>">我的反馈</a>
+									<a class="h-r" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'advice'))?>">更多</a>
+								</p>
+								<ul class="b">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$adviceSql@' limit="4" empty_str='<p class="b-none">暂无收藏</p>' }
+									<li>
+										<p class="b-vname" title="{field.content}">{field.content}</p>
+										<span class="b-date">{field.date function="date('Y-m-d',@this)"}</span>
+									</li>
+									{/tag:Lamb_View_Tag_List}
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<div id="v-u-list" name="v-u-list" class="v-user-list" style="display: none;" >
+						<div class="v-u-panhang"></div>
+						<div class="v-u-desc"><p>您当前的排名是：第<em>{$rank}</em>名 {$tip}</p></div>
+						<div class="v-u-ul-t">
+							<span class="v-u-t1">排名</span>
+							<span class="v-u-t2">用户名</span>
+							<span class="v-u-t3">等级</span>
+							<span class="v-u-t4">在线时长</span>
+						</div>
+						<ul>
+							{tag:Lamb_View_Tag_List sql='@$sql@' limit='100' }
+							<li class="v-u-ul-l">
+								<em>{field.num}</em>
+								<span class="v-u-username {field.username function='@this == $_SESSION['_USERNAME_'] ? 'v-u-username-r' : '''}">{field.username}</span>
+								<span class="v-u-ll">LV{field.level function="Lamb_Utils::objectCall('@$this->mHash@', 'checkLevel', array(@this))"}</span>
+								<span class="v-u-level">{field.level}</span>
+							</li>	
+							{/tag:Lamb_View_Tag_List}	
+						</ul>
+					</div>
+					

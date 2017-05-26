@@ -1,0 +1,51 @@
+.login{
+	float:right;
+	margin-right:5px;
+	zoom:1;
+	color:#fff;
+}
+.login li a{	
+	color:#fff !important;
+	height:15px;
+	line-height:15px;
+	over-flow:hidden;
+	padding:0px 4px;
+}
+.layer_global_main{
+	border:#6b97c1 1px solid;
+	background-color:#fff;
+}
+.layer_global_title{
+	background:url(../images/pupop_bg.png) #8baccf repeat-x;
+	height:28px;
+	/*cursor:move;*/
+}
+.layer_global_title h3{
+	line-height:28px;
+	text-indent:8px;
+	float:left;
+	height:28px;
+	color:#fff;
+	font-size:12px;
+	overflow:hidden;
+}
+.layer_global_main img{
+	border:none;
+	position:relative;
+}
+
+.layer_global_main button{
+	border:none;
+	font-size:12px;
+	cursor:pointer;
+	line-height:100px;
+	width:34px;
+	height:19px;
+	float:right;
+	background:url(../images/pupop_bg.png) 0px -30px no-repeat;
+	margin-right:5px;
+}
+.layer_global_cont{
+	background:#fff;
+	color:#5f5f5f;
+}

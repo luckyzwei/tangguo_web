@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<link href="{$this->mSiteCfg['site_root']}mini/css/miniindex.css" rel="stylesheet"/>
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<script src="{$this->mSiteCfg['site_root']}mini/api/mini.js"></script>
+<?php echo isset($miniData) ? "<script>var miniData = " . $miniData . ";</script>" : "<script>var miniData = null;</script>;"; ?>
+<title>天天看点</title>
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="w-head clear" id="head">
+			
+		</div>
+		<div class="w-body" id="wBody">
+		
+		</div>
+	</div>
+</body>
+<script>
+function search(q)
+{
+	return TTK.lib.url.get('search', '', {q : encodeURIComponent(q)}, {random : 1})	
+}
+
+(function(){
+var cn = 'hasshowed',
+	delaytime = 15 * 1000,
+	param = $F.parseUrl(location.href, true);
+
+TtkMini.nav();
+if (param.query && param.query.refresh == 1) {
+	return ;
+}
+
+if (!$C.get(cn)) {
+	var d = $B.extend.date,
+		ts = parseInt(new Date().valueOf() / 1e3),
+		lifetime = d.strtotime(d.format('Y-m-d 23:59')) - ts;
+	
+	window.onload = function()
+	{
+		setTimeout(function(){
+			try {
+				$C.set(cn, 1, lifetime);
+				window.external.Show();
+			} catch (e) {}
+		}, delaytime);
+	}
+}
+})();
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_30088506'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088506' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>

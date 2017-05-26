@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/source_editor.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="{$this->mSiteRoot}api/base.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<style> 
+.input_text{
+	width:30px;
+}
+ul,ul li{
+	list-style:none;
+}
+.msg {
+	margin-top:10px;
+}
+.msg li{
+	margin-bottom:10px;
+	margin-left:15px;
+	margin-right:15px;
+	border: 1px solid #ccc;
+}
+.msg li .title{
+	height:20px;
+	background:#eee;
+	line-height:15px;
+	padding-left:15px;
+	border-bottom:1px solid #ccc;
+	color:#444;
+	position:relative;
+}
+.date{
+	font-size:12px;
+	margin-left:10px;
+	color:#999;
+}
+.msg li .content{
+	line-height:15px;
+	padding-left:15px;
+	height:35px;
+	color:#f60;
+}
+.msg li .content span{
+	color:#999;
+}
+.msg li b{
+	font-weight:normal;
+	color:#0d61bf;
+}
+a.repeat{
+	position:absolute;
+	right:10px;
+	top:2px;
+	font-size:12px;
+}
+a.dele{
+	position:absolute;
+	right:70px;
+	top:2px;
+	font-size:12px;
+}
+a.show{
+	position:absolute;
+	right:90px;
+	top:2px;
+	font-size:12px;	
+}
+a.status{
+	position:absolute;
+	right:150px;
+	top:2px;
+	font-size:12px;	
+}
+.sNone{
+	height:50px;
+	line-height: 50px;
+	text-indent:20px;
+}
+.updateDiago{
+	width:400px;
+	border:2px solid #ccc;
+	background:#fff;
+}
+.updateDiago p{
+	margin:auto 5px;
+	color:#444;
+}
+.red{
+	color:red;
+}
+.gray{
+	color:#999;
+}
+
+.d-sub{
+	display:block;
+	width:60px;
+	height:30px;
+	line-height:30px;
+	background:#188DFA;
+	text-align:center;
+	color:#fff !important;
+	cursor:pointer;
+	margin-top:10px;
+}
+.reply{
+	margin-left:15px;
+}
+
+.reply textarea{
+	width:500px;
+	height:60px;
+}
+</style>
+</head>
+<body>
+<?php if ($action == 'sublist') { ?>
+<div id="rightTop" style="height:50px;">
+	<p>反馈管理</p>
+	<ul class="subnav">
+		<li><span>管理</span></li>
+	</ul>
+</div>
+<ul class="msg">
+	<form name="deleform" action="<?php echo $this->mRouter->urlEx('video', 'feedback', array('ac' => 'dele'))?>" method="post">
+		{tag:Lamb_View_Tag_List id='list' prepare_source='$aPrepareSource' sql='@$sql@' is_page='1' page='@$page@' cache_time='-1' pagesize='20' empty_str='<li class="sNone">对不起，暂无反馈信息</li>'}
+		<li id="reply" name="reply">
+			<div class="title"><input type="checkbox" name="vid[]" value="{field.id}"/>&nbsp;用户ID：{field.uid} <span 
+class="date">{field.date function="date('Y-m-d H:i:s', @this)"}</span><a class="repeat" href="
+{field.id function="Ttkvod_Utils::U(array('ac' => 'dele', 'id' => @this), 'feedback', 'video')"}">删除</a></div>
+			<p class="content">
+				<span>反馈信息：</span>
+				<span>{field.content function="htmlentities(@this ? @this : '无', ENT_COMPAT, 'gb2312')"}</span>
+			</p>
+			<p class="content">
+				<span>回复信息：</span>
+				<span>{field.reply function="empty(@this) ? '暂未回复' : @this"}</span><br/>
+			</p>
+			<p class="reply">
+				<textarea></textarea>
+				<span class="d-sub"  vid="{field.id}">回复</span>
+			</p>
+		</li>
+		{/tag:Lamb_View_Tag_List}
+	</form>
+		{tag:Lamb_View_Tag_Page listid='list'}	
+			<li style="border:none;"><div id="pageDiv"><span class="msg"><a href="javascript:checkAll('vid[]')">全
+选</a> <a href="javascript:confirm('确定删除吗?')?document.deleform.submit():void(0)">删除</a> 共#num#条数据 当前#currentPage#页</span><span class="page"><a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span></span></div></li>
+		{/tag:Lamb_View_Tag_Page}
+</ul>
+<?php } else { ?>
+<script>
+window.onload=function()
+{
+	var oTable=$A('distinction');
+	var aTdObjItem=oTable.getElementsByTagName('tr');
+	for (var i = 1,j = aTdObjItem.length-2 ;i < j;i++)
+	{
+		aTdObjItem[i].style.backgroundColor = ( i % 2 ) == 0? '#d9ebf5' : '#eee';
+	}
+}
+</script>
+<div id="rightTop" style="height:50px;">
+	<p>反馈管理</p>
+	<ul class="subnav">
+		<li><span>列表</span></li>
+	</ul>
+</div>
+<div class="info2" style="color:#444">
+	<table class="distinction" id="distinction">
+		<thead>
+			<tr>
+				<th width="25%">用户ID</th>
+				<th width="25%">反馈总数</th>
+				<th width="25%">是否回复</th>
+				<th width="15%">最新反馈时间</th>
+				<th width="10%">查看详情</th>
+			</tr>
+		</thead>
+		<tbody>
+			{tag:Lamb_View_Tag_List id='list' sql='@$sql@' is_page='1' page='@$page@' cache_time='-1' pagesize='30' empty_str='<tr><td colspan="5" style="padding:20px">对不起，暂无数据</td></tr>'}
+					<tr>
+						<td>{field.uid}</td>
+						<td>{field.num}</td>
+						<td>{field.r_num function="@this < @me['num'] ? '<font color="red">否</font>' : '<font color="green">是</font>'"}</td>
+						<td>{field.date function="date('Y-m-d H:i:s',@this)"}</td>
+						<td><a href="{field.uid function="Ttkvod_Utils::U(array('uid' => @this, 'ac' => 'sublist'), 'feedback', 'video')"}" >查看详情</a></td>
+					</tr>
+			{/tag:Lamb_View_Tag_List}
+			{tag:Lamb_View_Tag_Page listid='list'}
+				<tr><td colspan="5"><div id="pageDiv"><span class="msg">共#num#条数据 当前#currentPage#页</span><span class="page">
+				<a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" 
+class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span><input type="text" size="2" value="#currentPage#" onblur="if(this.value && this.value!=#currentPage#){var s=location.href.replace(/&p\/[^&]*/gi,'');location.href=s+'/p/'+this.value}"/></div></td></tr>
+			{/tag:Lamb_View_Tag_Page}				
+		</tbody>
+		<tfoot>
+			<tr class="tr_pt10">
+				<td colspan="5"></td>
+			</tr>			
+		</tfoot>
+	</table>
+</div>
+<?php } ?>
+
+<script>
+	$B.ready(function(){
+		var domReply = document.getElementsByName('reply');
+		$F.each(domReply, function(dr){
+			var textarea = dr.getElementsByTagName('textarea')[0],
+				domMsg = dr.getElementsByTagName('p')[1].getElementsByTagName('span')[1],
+				domRep = dr.getElementsByTagName('p')[2].getElementsByTagName('span')[0];
+			
+			$E.addEvent(domRep, 'click', function(){
+				var text = textarea.value,
+					vid  = domRep.getAttribute('vid');
+				
+				if (text.length == 0) {
+					return msgBox.show({type : 'error', msg : '请填写回复内容!'});
+				}
+						
+				$B.ajax({
+					'url' : Ttk.lib.getUrl('video', 'feedback', {id : vid, rp : text, ac : 'ajax'}),
+					'success' : function(s) {
+						if(s == 'succ'){
+							domMsg.innerHTML = text;
+							textarea.value = '';
+							msgBox.show({type : 'succ', msg : '更新成功'});
+						}else{
+							msgBox.show({type : 'error', msg : '更新失败'});
+						}
+					}
+				});
+			});
+		});	
+	});
+</script>
+</body>
+</html>

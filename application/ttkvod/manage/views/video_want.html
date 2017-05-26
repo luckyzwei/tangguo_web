@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/source_editor.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="{$this->mSiteRoot}api/base.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<style> 
+.i-item{
+	
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+.i-t-title{
+	height: 25px;
+	background: #eee;
+	line-height: 25px;
+	padding-left: 15px;
+	border-bottom: 1px solid #ccc;
+	color: #444;
+	position: relative;
+}
+.i-t-title span{
+	margin-right: 10px;
+}
+.t, .i-t-detail li span{
+	color:#999;
+}
+.t-del{
+	float:right;
+	margin-right: 8px;
+}
+.i-t-detail{
+	padding:0 15px 15px;
+}
+.i-t-detail li{
+	line-height: 35px;
+}
+
+.d-sub{
+	display:block;
+	width:60px;
+	height:30px;
+	line-height:30px;
+	background:#188DFA;
+	text-align:center;
+	color:#fff !important;
+	cursor:pointer;
+	margin-top:10px;
+}
+.reply{
+	width:500px;
+	height:60px;
+}
+</style>
+</head>
+<body>
+<div id="rightTop" style="height:50px;line-height:50px;">
+	<p style="clear:both;">
+		<form name="search">
+			搜索：
+			<input type="text" name="keywords" value="{$keywords}" size="50"/>
+			<select name="query">
+				<option value="vedioname" {$sels[0]}>指定影片名称</option>
+				<option value="uid"{$sels[1]}>会员ID</option>	
+				<option value="username"{$sels[2]}>用户名</option>	
+			</select>
+			<input type="submit" class="formbtn" value="搜索"/>
+		</form>	
+		<script>Router.bindForm(true, 'video', 'want', document.search)</script>
+	</p>
+</div>
+<div class="info2" style="color:#444;padding:20px">
+	<form method="post" name="deleForm" action="<?php echo $this->mRouter->urlEx('video', 'want', array('ac' => 'dele'))?>">
+	{tag:Lamb_View_Tag_List id='list' sql='@$sql@' prepare_source="@$aPrepareSource@" is_page='1' page='@$page@' cache_time='-1' pagesize='30' empty_str='<tr><td colspan="9" style="padding:20px">对不起，暂无数据</td></tr>'}
+		<div class="i-item">
+			<div class="i-t-title">
+				<span class="t">ID:</span><span>{field.id}</span>
+				<span class="t">影片名:</span><span>{field.vname}</span>
+				<span class="t">用户名:</span><span>{field.uname}</span>
+				<span class="t">用户ID:</span><span>{field.uid}</span>
+				<span class="t">{field.date function="date('Y-m-d H:i:s', @this)"}</span>
+				<!--a class="t-del" href="{field.id function="Ttkvod_Utils::U(array('ac' => 'dele', 'vid' => @this), 'fixed', 'video')"}">删除</a-->
+			</div>
+			<ul class="i-t-detail" name="i-t-detail">
+				<li><span>影片信息URL：</span> {field.url function="empty(@this) ? '<font>无</font>' : @this"}</li>
+				<li>
+					<span>影片信息:</span>
+					{field.notes function="htmlentities(@this ? @this : '无', ENT_COMPAT, 'gb2312')"}
+				</li>
+				<li>
+					<span>回复信息：</span>
+					<span>{field.ext function="empty(@this) ? '暂未回复' : @this"}</span>
+				</li>
+				<li>
+					<p>
+						<textarea class="reply"></textarea>
+						<span class="d-sub" vid="{field.id}" vname="{field.vname}">确定</span>
+					</p>
+				</li>
+			</ul>
+		</div>
+	{/tag:Lamb_View_Tag_List}
+	</form>
+	{tag:Lamb_View_Tag_Page listid='list'}
+	<div id="pageDiv">
+		<span class="msg">共#num#条数据 当前#currentPage#页</span>
+		<span class="page">
+			<a href="@$pageUrl@1" class="nofocus">首页</a>
+			<a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+			{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+			<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+		</span>
+	</div>
+	{/tag:Lamb_View_Tag_Page}
+</div>
+</body>
+<script>
+$B.ready(function(){
+	var domUls = document.getElementsByTagName('ul');
+	$F.each(domUls, function(ul){
+		var textarea = ul.getElementsByTagName('textarea')[0],
+			domRep = ul.getElementsByTagName('li')[2].getElementsByTagName('span')[1],
+			domSub = ul.getElementsByTagName('li')[3].getElementsByTagName('span')[0];
+		
+		$E.addEvent(domSub, 'click', function(){
+			var ext = textarea.value,
+				vid = domSub.getAttribute('vid'),
+				vname = domSub.getAttribute('vname');
+			
+			if (ext.length == 0) {
+				return msgBox.show({type : 'error', msg : '请填写回复内容!'});
+			}
+
+			$B.ajax({
+				'url' : Ttk.lib.getUrl('video', 'updateWant', {i : vid, v : vname, e : ext}),
+				'success' : function(s) {
+					if(s == 'succ'){
+						if(ext.match(/http:\/\/.+/)){
+							domRep.innerHTML = '<a href="' + ext + '" >'+ vname + '</a>';
+						}else{
+							domRep.innerHTML = ext;
+						}
+						textarea.value = '';
+						msgBox.show({type : 'succ', msg : '回复成功'});
+					}else{
+						msgBox.show({type : 'error', msg : '回复失败'});
+					}
+				}
+			});
+		});
+	});
+});
+</script>
+</html>

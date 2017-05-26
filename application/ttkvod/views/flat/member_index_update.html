@@ -1,0 +1,33 @@
+					<div class="v-i-head">
+						<a id="h-u-msg" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'updateMsg'))?>" class="cur">我的资料</a>
+						<a href="#" id="h-u-pass">修改密码</a>
+					</div>
+					<div class="v-want">
+						<div id="v-w-msg" name="v-w-msg" class="v-edit">
+							<form method="post" action="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'updateMsg'))?>" target="opframe">
+								<ul>
+									<li class="line">用户名：{$msg['username']}</li>
+									<li class="line">邮箱：<input type="text" name="data[email]"  value="{$msg['email']}" class="s1" /><span style="color: #ff6600">*</span></li>
+									<li class="line">昵称：<input type="text" name="data[nickname]" value="{$msg['nickname']}" class="s1" /></li>
+									<li class="line">QQ ：<input type="text" name="data[qq]" value="{$msg['qq']}" class="s1" /></li>
+									<li class="line">
+										<input type="submit" value="提交" class="sub" onMouseOver="this.className='subcur sub'" onMouseOut="this.className='sub'"/>
+									</li>
+								</ul>
+							</form>
+						</div>
+						
+						<div class="v-edit" style="display: none;" id="v-w-password" name="v-w-password" >
+							<form method="post" action="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'updateMsg'))?>" target="opframe">
+							<ul>
+								<input type="hidden" name="data[type]" value="psd" />
+								<li class="line">旧密码：<input type="password" name="data[oldpassword]" class="s1" /><span style="color: #ff6600">*</span></li>
+								<li class="line">新密码：<input type="password" name="data[password]" class="s1" /><span style="color: #ff6600">*</span></li>
+								<li class="line">确认密码：<input type="password" name="data[rpassword]" class="s1" /><span style="color: #ff6600">*</span></li>
+								<li class="line t">
+									<input type="submit" value="提交" class="sub" />
+								</li>	
+							</ul>
+							</form>
+						</div>
+					</div>

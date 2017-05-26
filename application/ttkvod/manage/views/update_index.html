@@ -1,0 +1,112 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link href="{$this->mThemePath}css/public.css" type="text/css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/source_editor.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="{$this->mSiteRoot}api/base.js"></script>
+<script>Ttk.lib.intellSearch({$id});</script>
+<style>
+.wrap{position:relative}
+.intell_result {
+	margin-top:10px;
+}
+.intell_result li{
+	margin:0 15px 15px;
+	border-bottom:1px solid #ccc;
+	zoom:1;
+	font-family:"微软雅黑";
+	padding-bottom:10px;
+}
+.intell_result li .pic{
+	display:block;
+	float:left;
+	width:120px;
+	height:160px;
+	padding:1px;
+	border:1px solid #ccc;
+	overflow:hidden;
+}
+.intell_result li .pic img{
+	width:100%;
+	height:100%;
+}
+.intell_result li .pic:hover{
+	border-color:#ff6600;
+}
+.intell_result li dl{
+	float:left;
+	margin-left:10px;
+}
+.intell_result li dl dt,.intell_result li dl dd{
+	margin-bottom:2px;
+	zoom:1;
+}
+.intell_result li dl dt .title,.intell_result li dl dt span{
+	float:left;
+}
+.intell_result li dl dt .title{
+	font-size:16px;
+}
+.intell_result li dl dt span{
+	margin-left:5px;
+	color:#999;
+}
+.intell_result li dl dt .score{
+	font-size:16px;
+	color:#ff6600;
+	margin-left:20px;
+}
+.intell_result li dl dd span{
+	color:#999;
+}
+.loadding{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color:#000;
+	filter:alpha(opacity=20);
+	left:0;
+	top:0;
+	display:none;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="top_result_wrap">
+		<?php if(!$isEmpty) {?>
+		<div class="result_title"><h4>置顶结果</h4></div>
+		<ul class="intell_result" id="itell_result">
+			<?php
+			$typename = array(2 => '电视剧', 1 => '电影', 4 => '动漫', 3 => '综艺' ,'0' => ''); 
+			foreach($data as $item) {?>
+				
+			<li>
+				<a href="#" class="pic" tag="collect" title="点击开始采集" _moviename='{$item['name']}' _ext='{$item['type']}' _source="{$source}" _url="{$item['url']}"><img src="{$item['pic']}"/></a>
+				<dl>
+					<dt>
+						<a href="#" tag="open" title="点击查看详情" class="title" _url="{$item['url']}" _moviename='{$item['name']}'>{$item['name']}</a>
+						<span>[{$typename[$item['cateid']]}]</span>
+					</dt>
+					<?php if($item['actors']){?><dd><span>演员：</span>{$item['actors']}</dd><?php }?>
+					<?php if($item['directors']){?><dd><span>导演：</span>{$item['directors']}</dd><?php }?>
+					<?php if($item['type']){?><dd><span>类型：</span>{$item['type']}</dd><?php }?>
+					<?php if($item['typetag']){?><dd><span>看点：</span>{$item['typetag']}</dd><?php }?>
+					<?php if($item['area']){?><dd><span>地区：</span>{$item['area']}</dd><?php }?>
+					<?php if($item['showyear']){?><dd><span>年份：</span>{$item['showyear']}</dd><?php }?>
+					<?php if($item['description']){?><dd class="describe">{$item['description']}</dd><?php }?>
+				</dl>
+			</li>
+			<?php }?>
+		</ul>
+		<div class="page">第<strong>{$page}</strong>页<a href="{$firstUrl}">首页</a><a href="{$prevUrl}">上一页</a><a href="{$nextUrl}">下一页</a></div>
+		<?php } else {?>
+			<p style="font-family:'微软雅黑';line-height:60px;color:#ff6600;text-align:center;font-size:16px;font-weight:bold">对不起，暂无搜索结果</p>
+		<?php }?>
+	</div>
+	<div class="loadding" id="loadding"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+ {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+BODY {
+	BACKGROUND-POSITION: left top; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(bodybg.jpg); BACKGROUND-REPEAT: repeat-x; BACKGROUND-COLOR: #e3effd
+}
+#top {
+	BACKGROUND: url(pic1.jpg) repeat-x; MARGIN: auto; WIDTH: 1000px; HEIGHT: 98px
+}
+#main {
+	MARGIN: auto; WIDTH: 1000px; HEIGHT: 279px
+}
+#main_left {
+	BACKGROUND: url(pic2.jpg) no-repeat; FLOAT: left; WIDTH: 283px; HEIGHT: 279px
+}
+#main_con {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 157px; BACKGROUND: url(pic3.jpg) no-repeat; FLOAT: left; PADDING-BOTTOM: 0px; WIDTH: 281px; PADDING-TOP: 125px; POSITION: relative; HEIGHT: 154px
+}
+#main_con TD {
+	COLOR: #144290; HEIGHT: 25px
+}
+.yo {
+	BORDER-RIGHT: #8eaddb 1px solid; BORDER-TOP: #8eaddb 1px solid; BORDER-LEFT: #8eaddb 1px solid; WIDTH: 145px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #8eaddb 1px solid; HEIGHT: 18px
+}
+.ya {
+	BORDER-RIGHT: #8eaddb 1px solid; BORDER-TOP: #8eaddb 1px solid; BORDER-LEFT: #8eaddb 1px solid; WIDTH: 60px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #8eaddb 1px solid; HEIGHT: 18px
+}
+#main_con SPAN {
+	DISPLAY: block; PADDING-LEFT: 10px; FONT-SIZE: 17px; RIGHT: 84px; BACKGROUND: url(pic5.jpg) no-repeat; WIDTH: 48px; COLOR: #fff; BOTTOM: 82px; LINE-HEIGHT: 21px; POSITION: absolute; HEIGHT: 21px
+}
+#main_con A {
+	DISPLAY: block; BACKGROUND: url(pic6.jpg) no-repeat; WIDTH: 69px; LINE-HEIGHT: 21px; HEIGHT: 21px
+}
+#main_right {
+	BACKGROUND: url(pic4.jpg) no-repeat; FLOAT: left; WIDTH: 283px; HEIGHT: 279px
+}
+#login A {
+	DISPLAY: block; PADDING-LEFT: 24px; BACKGROUND: url(pic6.jpg) no-repeat; WIDTH: 45px; COLOR: #15408f; LINE-HEIGHT: 21px; HEIGHT: 21px; TEXT-DECORATION: none
+}
+#login {
+	MARGIN-TOP: 10px; MARGIN-LEFT: 45px; WIDTH: 73px; HEIGHT: 21px
+}
+#login TR {
+	MARGIN-RIGHT: 6px
+}
+#main2 {
+	MARGIN: auto; WIDTH: 1000px; HEIGHT: 57px
+}
+#main2_left {
+	BACKGROUND: url(pic12.jpg) no-repeat; FLOAT: left; WIDTH: 283px; HEIGHT: 57px
+}
+#main2_con {
+	BACKGROUND: url(pic8.jpg) no-repeat right top; FLOAT: left; WIDTH: 438px; HEIGHT: 57px
+}
+#main2c_left {
+	BACKGROUND: url(pic9.jpg) no-repeat; FLOAT: left; WIDTH: 20px; HEIGHT: 57px
+}
+#main2c_con {
+	BACKGROUND: url(pic10.jpg) repeat-x; FLOAT: left; WIDTH: 398px; HEIGHT: 57px
+}
+#main2_right {
+	BACKGROUND: url(pic13.jpg) no-repeat; FLOAT: left; WIDTH: 283px; HEIGHT: 57px
+}
+#bottom {
+	BACKGROUND: #e2eefe; MARGIN: auto; WIDTH: 1000px; HEIGHT: 80px; TEXT-ALIGN: center
+}
+#bottom P {
+	COLOR: #99accc; LINE-HEIGHT: 20px
+}

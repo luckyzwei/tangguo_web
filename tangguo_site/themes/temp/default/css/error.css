@@ -1,0 +1,77 @@
+/* 由 F12 开发人员工具生成。这可能不是原始源文件的准确表示形式。*/
+@import url( http://imgcache.qq.com/minivideo_v1/olympic/css/global.css );
+.search_body {
+	background: url("http://imgcache.qq.com/minivideo_v1/v2/img/search_bg.png") no-repeat rgb(67, 67, 67);
+}
+.border_line {
+	background: url("http://imgcache.qq.com/minivideo_v1/v2/img/search_bg.png") no-repeat rgb(67, 67, 67);
+}
+h3.paihang_title {
+	background: url("http://imgcache.qq.com/minivideo_v1/v2/img/search_bg.png") no-repeat rgb(67, 67, 67);
+}
+.list_body li {
+	background: url("http://imgcache.qq.com/minivideo_v1/v2/img/search_bg.png") no-repeat rgb(67, 67, 67);
+}
+.search_body {
+	background-position: 0px -258px; width: 100%; height: 122px; float: left;
+}
+.search_box {
+	background: url("http://imgcache.qq.com/minivideo_v1/v2/img/search_v3_bg.png") no-repeat 0px 0px; margin: 40px auto; width: 307px; height: 25px; text-align: left; overflow: hidden;
+}
+.search_input {
+	border: currentColor; color: rgb(156, 156, 156); background-color: transparent;
+}
+.search_btn {
+	border: currentColor; color: rgb(156, 156, 156); background-color: transparent;
+}
+.search_input {
+	padding: 5px 5px 0px 25px; width: 230px; height: 22px; font-size: 12px; _width: 260px;
+}
+.search_btn {
+	border: currentColor; width: 46px; height: 25px; line-height: 60px; overflow: hidden; font-size: 0px; margin-top: -1px; cursor: pointer; background-color: transparent;
+}
+html {
+	overflow: hidden;
+}
+body {
+	overflow: hidden;
+}
+.error_box {
+	background: rgb(68, 68, 68); width: 100%; text-align: center; float: left;
+}
+.error_box .error_con {
+	background: url("/template/default/images/error_bg.png") no-repeat 0px -48px; font: lighter 12px/20px "宋体"; margin: 100px auto 0px; width: 300px; height: 260px; text-align: left; padding-left: 80px; font-size-adjust: none; font-stretch: normal;
+}
+#model_frame {
+	background: rgb(68, 68, 68);
+}
+.error_box .error_con h2.title {
+	font: lighter 16px/25px "宋体"; color: rgb(255, 255, 255); font-size-adjust: none; font-stretch: normal;
+}
+.error_box .error_con .error_text {
+	color: rgb(156, 156, 156);
+}
+.error_box .error_con .search_obj {
+	margin: 20px 0px 0px;
+}
+.error_box .error_con .search_obj h3.title {
+	font: lighter 12px/25px "宋体"; color: rgb(156, 156, 156); font-size-adjust: none; font-stretch: normal;
+}
+.error_box .error_con .search_obj .search_box {
+	background: url("/template/default/images/error_bg.png") no-repeat 0px 0px; margin: 0px 0px 4px; width: 200px; height: 25px; position: relative;
+}
+.error_box .error_con .search_obj .search_input {
+	left: 0px; width: 128px; overflow: hidden; position: absolute; _width: 155px; _top: 3px;
+}
+.error_box .error_con .search_obj .search_btn {
+	left: 154px; width: 45px; position: absolute;
+}
+.error_box .error_con .search_obj .tips {
+	color: rgb(156, 156, 156);
+}
+.error_box .error_con .search_obj .tips a {
+	color: rgb(255, 255, 255);
+}
+.error_box .error_con .search_obj .c_black {
+	color: rgb(0, 0, 0);
+}

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<title>{$this->mSiteCfg['site_name']}-电影</title>
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/index.css" rel="stylesheet">
+<meta name="robots" content="nofollow"> 
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>
+Controllor.siteRoot='{$this->mSiteCfg['site_root']}';TTK.action.index();
+</script>
+</head>
+<body>
+<div class="w1180 clear">
+	{layout head_nav}
+	<div class="wrap">
+		{layout head_f}
+		<div class="frame" id="i_w_f">
+			<div class="body w960">
+	
+				<div class="sec hot-sec">
+					<div class="h-s-head clear">
+						<h4 class="h-s-h-title">热播推荐</h4>
+					</div>
+					<div class="h-s-body">
+						<ul class="h-s-list clear">
+							<!-- recommend item -->
+							{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='select id,name,vedioPic,mark from vedio order by stortId desc' limit='12'}
+							<li>
+								<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+								<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+							</li>								
+							{/tag:Lamb_View_Tag_List}																																									
+							<!--/ recommend item -->													
+						</ul>
+					</div>
+				</div>
+				<div class="mb10" id="ttk_index_top"><script src="{$this->mSiteCfg['site_root']}ttk/index_top.js"></script></div>
+				<!-- tv -->
+				<div class="sec cate-sec tv-sec clear">
+					<div class="c-s-left">
+						<div class="c-s-head clear">
+							<h4 class="c-s-h-title">电视剧</h4>
+							<div class="c-s-tabs clear" id="c_s_p" name="c_s_p"><a href="#" class="on" hideFocus="true">最热</a><a href="#" hideFocus="true">最新</a><a href="#" hideFocus="true">内地</a><a href="#" hideFocus="true">港剧</a><a href="#" hideFocus="true">台剧</a><a href="#" hideFocus="true">韩剧</a><a href="#" hideFocus="true">泰剧</a><a href="#" hideFocus="true">美剧</a></div>
+						</div>
+						<div class="c-s-body" id="c_s_l" name="c_s_l">
+							<ul class="c-s-list clear">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1'  sql='@$listSqlTemplate@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}							
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForUpdate@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}						
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("大陆", PDO::PARAM_STR))'}					
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("香港", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("台湾", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("韩国", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("泰国", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(2, PDO::PARAM_INT), ":area" => array("美国", PDO::PARAM_STR))'}		
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>																																										
+						</div>
+					</div>
+					<div class="c-s-right">
+						<div class="c-s-head clear">
+							<div class="c-r-tabs" id="c_r_tabs" name="c_r_tabs">
+								<a href="#" class="on" hideFocus="true">周人气</a>
+								<a href="#" hideFocus="true">月人气</a>
+								<a href="#" hideFocus="true">高分榜</a>
+							</div>
+						</div>
+						<div class="c-s-rankbody mb10" id="c_s_rankbody" name="c_s_rankbody">
+							<ul class="c-s-r-list">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topWeekSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>					
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topPointSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>						
+						</div>
+						<dl class="c-s-type clear">
+							<dt>类型</dt>
+							<?php foreach ($searchIndex['tv']['type'] as $type) {?>
+							<dd><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 2, 'tag' => $type))?>">{$type}</a></dd>
+							<?php }?>
+						</dl>
+					</div>
+				</div>
+				<!--/tv -->
+				<div class="mb10" id="ttk_index_middle"><script src="{$this->mSiteCfg['site_root']}ttk/index_middle.js"></script></div>	
+				<!-- movie -->
+				<div class="sec cate-sec movie-sec clear">
+					<div class="c-s-left">
+						<div class="c-s-head clear">
+							<h4 class="c-s-h-title">电影</h4>
+							<div class="c-s-tabs clear" id="c_s_p" name="c_s_p"><a href="#" class="on" hideFocus="true">最热</a><a href="#" hideFocus="true">最新</a><a href="#" hideFocus="true">爱情</a><a href="#" hideFocus="true">动作</a><a href="#" hideFocus="true">喜剧</a><a href="#" hideFocus="true">恐怖</a><a href="#" hideFocus="true">科幻</a><a href="#" hideFocus="true">伦理</a></div>
+						</div>
+						<div class="c-s-body" id="c_s_l" name="c_s_l">
+							<ul class="c-s-list clear">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1'  sql='@$listSqlTemplate@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}							
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForUpdate@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}						
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("爱情", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("动作", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("喜剧", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("恐怖", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("科幻", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(1, PDO::PARAM_INT), ":tag" => array("伦理", PDO::PARAM_STR))'}	
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>																																										
+						</div>
+					</div>
+					<div class="c-s-right">
+						<div class="c-s-head clear">
+							<div class="c-r-tabs" id="c_r_tabs" name="c_r_tabs">
+								<a href="#" class="on" hideFocus="true">周人气</a>
+								<a href="#" hideFocus="true">月人气</a>
+								<a href="#" hideFocus="true">高分榜</a>
+							</div>
+						</div>
+						<div class="c-s-rankbody mb10" id="c_s_rankbody" name="c_s_rankbody">
+							<ul class="c-s-r-list">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topWeekSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>					
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topPointSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>						
+						</div>
+						<dl class="c-s-type clear">
+							<dt>类型</dt>
+							<?php foreach ($searchIndex['movie']['type'] as $type) {?>
+							<dd><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 2, 'tag' => $type))?>">{$type}</a></dd>
+							<?php }?>
+						</dl>
+					</div>
+				</div>			
+				<!--/movie -->	
+				<div class="mb10" id="ttk_index_middle"><script src="{$this->mSiteCfg['site_root']}ttk/index_3.js"></script></div>
+				<!-- comic -->
+				<div class="sec cate-sec comic-sec clear">
+					<div class="c-s-left">
+						<div class="c-s-head clear">
+							<h4 class="c-s-h-title">动漫</h4>
+							<div class="c-s-tabs clear" id="c_s_p" name="c_s_p"><a href="#" class="on" hideFocus="true">最热</a><a href="#" hideFocus="true">新番</a><a href="#" hideFocus="true">国产</a><a href="#" hideFocus="true">日韩</a><a href="#" hideFocus="true">欧美</a><a href="#" hideFocus="true">少儿</a><a href="#" hideFocus="true">少女</a><a href="#" hideFocus="true">机战</a></div>
+						</div>
+						<div class="c-s-body" id="c_s_l" name="c_s_l">
+							<ul class="c-s-list clear">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1'  sql='@$listSqlTemplate@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT))'}							
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":tag" => array("新番", PDO::PARAM_STR))'}					
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":area" => array("大陆", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":area" => array("日本", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTemplateForArea@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":area" => array("欧美", PDO::PARAM_STR))'}		
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":tag" => array("少儿", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":tag" => array("少女", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(4, PDO::PARAM_INT), ":tag" => array("机战", PDO::PARAM_STR))'}	
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>																																										
+						</div>
+					</div>
+					<div class="c-s-right">
+						<div class="c-s-head clear">
+							<div class="c-r-tabs" id="c_r_tabs" name="c_r_tabs">
+								<a href="#" class="on" hideFocus="true">周人气</a>
+								<a href="#" hideFocus="true">月人气</a>
+								<a href="#" hideFocus="true">高分榜</a>
+							</div>
+						</div>
+						<div class="c-s-rankbody mb10" id="c_s_rankbody" name="c_s_rankbody">
+							<ul class="c-s-r-list">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topWeekSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(4, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>					
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(4, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topPointSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(4, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>						
+						</div>
+						<dl class="c-s-type clear">
+							<dt>类型</dt>
+							<?php foreach ($searchIndex['anime']['type'] as $type) {?>
+							<dd><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 2, 'tag' => $type))?>">{$type}</a></dd>
+							<?php }?>
+						</dl>
+					</div>
+				</div>			
+				<!--/comic -->			
+	
+				<!-- variety -->
+				<div class="sec cate-sec variety-sec clear">
+					<div class="c-s-left">
+						<div class="c-s-head clear">
+							<h4 class="c-s-h-title">综艺</h4>
+							<div class="c-s-tabs clear" id="c_s_p" name="c_s_p"><a href="#" class="on" hideFocus="true">最热</a><a href="#" hideFocus="true">访谈</a><a href="#" hideFocus="true">真人秀</a><a href="#" hideFocus="true">小品</a><a href="#" hideFocus="true">交友</a><a href="#" hideFocus="true">记录</a><a href="#" hideFocus="true">足球</a><a href="#" hideFocus="true">篮球</a></div>
+						</div>
+						<div class="c-s-body" id="c_s_l" name="c_s_l">
+							<ul class="c-s-list clear">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1'  sql='@$listSqlTemplate@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT))'}							
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("访谈", PDO::PARAM_STR))'}					
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("真人", PDO::PARAM_STR))'}				
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("小品", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("交友", PDO::PARAM_STR))'}		
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("记录", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("足球", PDO::PARAM_STR))'}			
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>
+							<ul class="c-s-list clear" style="display:none">
+								<!-- movie item -->
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$listSqlTempalteForTag@' limit='10' prepare_source='array(":tp" => array(3, PDO::PARAM_INT), ":tag" => array("篮球", PDO::PARAM_STR))'}	
+								<li>
+							<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}"><img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" alt="{field.name}"/>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}<span class="mark">{field.mark}</span></a>
+							<p class="pic_txt"><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+								</li>										
+								{/tag:Lamb_View_Tag_List}																
+								<!--/movie item -->
+							</ul>																																										
+						</div>
+					</div>
+					<div class="c-s-right">
+						<div class="c-s-head clear">
+							<div class="c-r-tabs" id="c_r_tabs" name="c_r_tabs">
+								<a href="#" class="on" hideFocus="true">周人气</a>
+								<a href="#" hideFocus="true">月人气</a>
+								<a href="#" hideFocus="true">高分榜</a>
+							</div>
+						</div>
+						<div class="c-s-rankbody mb10" id="c_s_rankbody" name="c_s_rankbody">
+							<ul class="c-s-r-list">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topWeekSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(3, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>					
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(3, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>
+							<ul class="c-s-r-list" style="display:none">
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='-1' cache_type='@$this->mCacheType@' sql='@$topPointSqlTemplate@' limit='10' auto_index_prev='1'  prepare_source='array(":tp" => array(3, PDO::PARAM_INT))'}
+									<li class="rand_#autoIndex#"><em>#autoIndex#</em><span><a router="static" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name function="Lamb_Utils::mbSubstr(@me['name'], 0, 14)"}</a></span><strong >{field.point function="sprintf('%0.1f', @this)"}</strong></li>									           
+								{/tag:Lamb_View_Tag_List}						
+							</ul>						
+						</div>
+						<dl class="c-s-type clear">
+							<dt>类型</dt>
+							<?php foreach ($searchIndex['show']['type'] as $type) {?>
+							<dd><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 2, 'tag' => $type))?>">{$type}</a></dd>
+							<?php }?>
+						</dl>
+					</div>
+				</div>			
+				<!--/variety -->					
+				<div id="ttk_index_bottom" class="mb10"><script src="/ttk/item_bottom.js"></script></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+<script src="{$this->mSiteCfg['site_root']}ttk/tj.js"></script>
+</body>
+</html>

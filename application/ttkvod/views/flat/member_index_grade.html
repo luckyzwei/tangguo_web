@@ -1,0 +1,20 @@
+	<div id="v-u-list" name="v-u-list" class="v-user-list">
+		<div class="v-u-panhang"></div>
+		<div class="v-u-desc"><p>您当前的排名是：第<em>{$rank}</em>名 {$tip}</p></div>
+		<div class="v-u-ul-t">
+			<span class="v-u-t1">排名</span>
+			<span class="v-u-t2">用户名</span>
+			<span class="v-u-t3">等级</span>
+			<span class="v-u-t4">在线时长</span>
+		</div>
+		<ul>
+			{tag:Lamb_View_Tag_List sql='@$sql@' limit='100' }
+			<li class="v-u-ul-l">
+				<em>{field.num}</em>
+				<span class="v-u-username {field.username function='@this == $_SESSION['_USERNAME_'] ? 'v-u-username-r' : '''}">{field.username}</span>
+				<span class="v-u-ll">LV{field.level function="Lamb_Utils::objectCall('@$this->mHash@', 'checkLevel', array(@this))"}</span>
+				<span class="v-u-level">{field.level}</span>
+			</li>	
+			{/tag:Lamb_View_Tag_List}	
+		</ul>
+	</div>

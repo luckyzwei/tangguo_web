@@ -1,0 +1,141 @@
+/*-------base--------*/
+
+*{
+	margin:0px;
+	padding:0px;
+}
+body{
+	font-size:12px;
+	font-family:Verdana;
+	background:url(../images/content.gif) repeat-y;
+	color:#234f8d;
+}
+a{
+	font-size:12px;
+	text-decoration:none;
+	color:#0d61bf;
+}
+ul,ul li{
+	list-style:none;
+}
+
+.clearfix:after {
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both
+}
+
+.clearfix {
+	*zoom: 1
+}
+/*------/base-------*/
+
+/*-----head--------*/
+
+#head{
+	width:100%;
+	height:100px;
+	background:url(../images/head.gif) repeat-x;
+	position:relative;
+}
+#head .logo{
+	position:absolute;
+	left:20px;
+	top:20px;
+}
+#head .top{
+	height:30px;
+	line-height:30px;
+	text-align:right;
+	padding-right:30px;
+	/*margin-top:10px;*/
+}
+#head a.menu-btn2{
+	padding:4px 10px 5px;
+	background:url(../images/menu_btn2.gif) no-repeat left center;
+}
+#head .nav{
+	position:absolute;
+	left:170px;
+	bottom:3px;
+	z-index:2;
+}
+#head .nav li{
+	display:inline;
+	float:left;
+	background:url(../images/nav_li_line.gif) no-repeat right 5px;
+	height:33px;
+	line-height:33px;
+}
+#head .nav li a{
+	padding-left:20px;
+	padding-right:20px;
+	font-size:14px;
+	font-weight:bold;
+	color:#369;
+}
+#head .nav li a.actived{
+	background:url(../images/actived.gif) no-repeat left 0px;
+	padding:10px 25px 10px 35px;
+	color:#fff;
+}
+/*-----/head------*/
+
+#content{width:100%;}
+#left{
+	border-bottom:#d3e9f8 3px solid;
+	/*width:170px;*/
+	float:left;
+	margin-right:2px;
+}
+#submenu li{
+	width: 150px;
+	height:30px;
+	line-height:30px;
+	background:#f4f9ff;
+	border-bottom:#d8ecff 1px solid;
+}
+#submenu li.title{
+	background:url(../images/left_menu.gif) repeat-x left top;
+	text-indent:1em;
+	color:#555;
+	border-bottom:none;
+}
+#submenu li a{
+	padding-left:2em;
+	background:url(../images/menus_dd.gif) 10px center no-repeat;
+}
+#submenu li a.actived{font-weight:bold;}
+#right{
+	float:right;
+}
+
+/*----float-----*/
+
+#float{
+	border:2px solid #7EB1CD;
+	background:#ecf5ff;
+}
+#float .float-cont{
+	margin:10px;
+	background:#fff;
+	border:1px solid #ccc;
+	line-height:28px;
+	padding-left:5px;
+	padding-bottom:5px;
+}
+#float .float-cont p{
+	font-size:14px;
+	color:#555;
+}
+/*---/float-----*/
+.Diago{
+	width:300px;
+	border:2px solid #ccc;
+	background:#fff;
+}
+.Diago p{
+	margin:15px 5px;
+	color:#444;
+}

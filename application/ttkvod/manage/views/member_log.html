@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<script src="{$this->mSiteRoot}api/calendar.js"></script>
+<style>
+/*========================begin calendar======================================*/
+#calendar_cont a:link {color:#464646;text-decoration:none;}
+#calendar_cont a:visited {color:#464646;text-decoration:none;}
+#calendar_cont a:hover{color:#ed145b;text-decoration:underline;}
+#calendar_cont a:active{color:#ed145b;text-decoration:underline;}
+#calendar_cont td{font-size:12px}
+#calendar_cont .header {font: 12px Arial, Tahoma !important;font-weight: bold !important;font: 11px Arial, Tahoma;font-weight: bold;color: #154BA0;background:#C2DEED;height: 25px;padding-left: 10px;
+}
+#calendar_cont .header td {padding-left: 10px;}
+#calendar_cont .header a {color: #154BA0;}
+#calendar_cont .header input {background:none;vertical-align: middle;height: 16px;}
+#calendar_cont .category {font: 12px Arial, Tahoma !important;font: 11px Arial, Tahoma;color: #92A05A;height:20px;background-color: #FFFFD9;}
+#calendar_cont .category td {border-bottom: 1px solid #DEDEB8;}
+#calendar_cont .expire,#calendar_cont .expire a:link,#calendar_cont .expire a:visited {color: #999999;}
+#calendar_cont .default,#calendar_cont .default a:link,#calendar_cont .default a:visited {color: #000000;}
+#calendar_cont .checked,#calendar_cont .checked a:link,#calendar_cont .checked a:visited {color: #FF0000;}
+#calendar_cont .today,#calendar_cont .today a:link,#calendar_cont .today a:visited {color: #00BB00;}
+#calendar_cont #calendar_year {display: none;line-height: 130%;background: #FFFFFF;position: absolute;z-index: 10;}
+#calendar_cont #calendar_year .col {float: left;background: #FFFFFF;margin-left: 1px;border: 1px solid #86B9D6;padding: 4px;}
+#calendar_cont #calendar_month {display: none;background: #FFFFFF;line-height: 130%;border: 1px solid #86B9D6;padding: 4px;position: absolute;z-index: 11;}
+#calendar_cont .tableborder {background: white;border: 1px solid #86B9D6;}
+#calendar_cont #year,#calendar_cont #month{padding-right:10px;}
+/*=======================end calendar=======================================*/
+</style>
+</head>
+
+<body>
+	<div class="info2" style="color:#444">
+		<p style="clear:both; margin-top:5px;">
+			<form name="search">
+				搜索：
+				<input type="text" name="keywords" value="{$keywords}" size="50"/>
+				<select name="query">
+					<option value="vid" {$sels[0]}>指定影片ID</option>
+					<option value="name"{$sels[1]}>指定影片名</option>
+				</select>
+				<input type="hidden" name="aid" value="{$aid}" />
+				从
+				<input type="text" name="stime" id="stime" value="<?php echo date('Y-m-d',$stime)?>"/>
+				到
+				<input type="text" name="etime" id="etime" value="<?php echo date('Y-m-d',$etime)?>"/>
+				<input type="submit" id="formbtn" class="formbtn" value="搜索"/>
+			</form>	
+			<script>Router.bindForm(true, 'member', 'log', document.search)</script>
+		</p>
+		<table class="distinction" id="distinction">
+		<thead>
+			<tr>
+				<th class="w70"><input id="selectAll" onclick="checkAll('id[]')" type="checkbox" /> <label for="selectAll">全选</label></th>
+				<th width="5%">ID</th>
+				<th width="15%">操作员</th>
+				<th width="10%">时间</th>
+				<th width="15%">影片名</th>
+				<th width="50%">操作记录</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form method="post" name="deleForm" action="{eval $this->mRouter->urlEx('member', 'deleteLog')}">
+				{tag:Lamb_View_Tag_List id='list' sql='@$sql@' is_page='1' cache_time='-1' prepare_source='@$aPrepareSource@' page='@$page@' pagesize='30'  empty_str='<tr><td colspan="10" style="padding:20px">对不起，暂无数据</td></tr>'}
+					<tr id="tr" name="tr">
+						<td><input type="checkbox" name="id[]" value="{field.id}"/></td>
+						<td name="item_#autoIndex#" id="item_#autoIndex#">{field.id}</td>
+						<td name="item_#autoIndex#" id="item_#autoIndex#">{field.adminname}</td>
+						<td>{field.time function="date('Y-m-d H:i:s', @this)"}</td>
+						<td>{field.moviename}</td>
+						<td>{field.contents}</td>
+					</tr>
+				{/tag:Lamb_View_Tag_List}	
+			</form>
+			{tag:Lamb_View_Tag_Page listid='list'}
+				<tr><td colspan="10"><div id="pageDiv"><span class="msg">共#num#条数据 当前#currentPage#页</span><span class="page">
+				<a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span></div></td></tr>
+			{/tag:Lamb_View_Tag_Page}
+		</tbody>
+		<tfoot>
+			<tr class="tr_pt10">
+				<td class="w70"><input id="selectAll" onclick="checkAll('id[]')" type="checkbox" /> <label for="selectAll">全选</label></td>
+				<td colspan="9"><input class="formbtn" type="button" onclick="return (confirm('确定删除吗？')?document.deleForm.submit():false)" value="删除" /></td>
+			</tr>
+		</tfoot>		
+	</table>
+	</div>
+</body>
+<script>
+var domTrs = document.getElementsByName('tr');
+$F.each(domTrs, function(item, index){
+	if (index % 2 == 0) {
+		item.style.background = "#d9ebf5";
+	} else {
+		item.style.background = "#eeeeee";
+	}
+});
+function calendarwe(domSdate, domEdate) {
+	var f1,f2;
+	f1 = function(e){
+		showcalendar(e,domSdate);
+	};
+	f2 = function(e){
+		showcalendar(e,domEdate);
+	};
+	$E.addEvent(domSdate,'click',f1);
+	$E.addEvent(domSdate,'focus',f1);
+	$E.addEvent(domEdate,'click',f2);
+	$E.addEvent(domEdate,'focus',f2);	
+}
+calendarwe($A('stime'), $A('etime'));
+</script>
+</html>

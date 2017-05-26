@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<script>
+window.onload=function()
+{
+	var oTable=$A('distinction');
+	var aTdObjItem=oTable.getElementsByTagName('tr');
+	for (var i = 1,j = aTdObjItem.length-2 ;i < j;i++)
+	{
+		aTdObjItem[i].style.backgroundColor = ( i % 2 ) == 0? '#d9ebf5' : '#eee';
+	}
+}
+var aType = [];
+<?php foreach ($this->mSiteCfg['channels'] as $key => $item) {
+	echo "aType[" . $key . "] = {id:" . $key . ",name:'" . $item['name'] . "'};";
+}
+?>
+
+function showType(index)
+{
+	var sHtml = '<option value="">选择类型</option>';
+	for(var i=1,j=aType.length;i<j;i++)
+	{
+		sHtml += '<option value="'+aType[i].id+'"'+(index==aType[i].id?' selected="selected"':'')+'>'+aType[i].name+'</option>';
+	}
+	document.write(sHtml);
+}
+function showOneType(id)
+{
+	for(var i=1,j=aType.length;i<j;i++)
+	{
+		if(aType[i].id==id)
+		{
+			return aType[i].name;
+		}
+	}
+}
+function changeShow(index,value,id)
+{
+	$B.ajax({
+		'url'		:	Router.get('video', 'ajax', {'ajaxAction' : 'custchk', 'id' : id, 'value' : 1, 'tt' : new Date().valueOf()}),
+		'success'	:	function(s)	
+		{
+			if(s == 'succ')	window.location.reload();
+		}
+	});
+}
+</script>
+</head>
+<body>
+<div id="rightTop" style="height:85px;">
+	<p>用户影片列表</p>
+	<ul class="subnav">
+		<li><span>列表</span></li>
+	</ul>
+	<p style="clear:both;">
+		<form name="search">
+			搜索：
+			<input type="text" name="keywords" value="{$keywords}" size="50"/>
+			<select name="query">
+				<option value="vedioname" {$sels[0]}>指定影片名称</option>
+				<option value="uid"{$sels[1]}>会员ID</option>	
+				<option value="username"{$sels[2]}>用户名</option>	
+			</select>
+			类型：
+			<select name="vedioType">
+				<script>showType({$videoType})</script>			
+			</select>
+			<input type="submit" class="formbtn" value="搜索"/>
+		</form>	
+		<script>Router.bindForm(true, 'video', 'customadd', document.search)</script>
+	</p>
+</div>
+<div class="info2" style="color:#444">
+	<table class="distinction" id="distinction">
+		<thead>
+			<tr>
+				<th class="w70"><input id="selectAll" onclick="checkAll('id[]')" type="checkbox" /> <label for="selectAll">全选</label></th>
+				<th width="5%"  style="text-align:left;">ID</th>
+				<th width="5%" style="text-align:left">会员ID</th>
+				<th width="10%" style="text-align:left">用户名</th>
+				<th width="10%" style="text-align:left">是否处理</th>
+				<th style="text-align:left;">视频名称</th>
+				<th width="5%" style="text-align:left;">视频分类</th>
+				<th width="10%">更新时间</th>
+				<th width="6%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form method="post" name="deleForm" action="<?php echo $this->mRouter->urlEx('video', 'customadd')?>">
+			{tag:Lamb_View_Tag_List prepare_source='@$aPrepareSource@' id='list' sql='@$sql@' is_page='1' page='@$page@' cache_time='-1' pagesize='30' empty_str='<tr><td colspan="9" style="padding:20px">对不起，暂无数据</td></tr>'}
+					<tr>
+						<td><input type="checkbox" name="id[]" value="{field.id}"/></td>
+						<td style="text-align:left;">{field.id}</td>
+						<td style="text-align:left;">{field.uid}</td>
+						<td style="text-align:left;">{field.username function="@this[0]"}</td>
+						<td style="text-align:left;" id='cont_#autoIndex#' onclick='changeShow(#autoIndex#,{field.isOp},{field.id})'>{field.isOp function="@this ? '<font class=js_ok>已审核<font':'<font class=js_error>未审核</font>'"}</td>
+						<td style="text-align:left;">{field.name function="htmlentities(@this, ENT_COMPAT, 'gb2312')"}</td>
+						<td style="text-align:left;"><script>document.write(showOneType({field.topType}))</script></td>
+						<td>{field.intdate function="date('Y-m-d H:i:s',@this)"}</td>
+						<td><a href="{field.id function="Ttkvod_Utils::U(array('id' => @this, 'ac' => 'check'), 'customadd', 'video')"}" target="_blank">审核</a></td>
+					</tr>
+			{/tag:Lamb_View_Tag_List}
+			</form>
+			{tag:Lamb_View_Tag_Page listid='list'}
+				<tr><td colspan="13"><div id="pageDiv"><span class="msg">共#num#条数据 当前#currentPage#页</span><span class="page">
+				<a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span><input type="text" size="2" value="#currentPage#" onblur="if(this.value && this.value!=#currentPage#){var s=location.href.replace(/&p\/[^&]*/gi,'');location.href=s+'/p/'+this.value}"/></div></td></tr>
+			{/tag:Lamb_View_Tag_Page}					
+		</tbody>
+		<tfoot>
+			<tr class="tr_pt10">
+				<td class="w70"><input id="selectAll" onclick="checkAll('id[]')" type="checkbox" /> <label for="selectAll">全选</label></td>
+				<td colspan="8">  <input class="formbtn" type="button" onclick="return (confirm('确定删除吗？')?document.deleForm.submit():false)" value="删除" /></td>
+			</tr>			
+		</tfoot>
+	</table>
+</div>
+</body>
+</html>

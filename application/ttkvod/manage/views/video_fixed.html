@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<style> 
+.input_text{
+	width:30px;
+}
+ul,ul li{
+	list-style:none;
+}
+.msg {
+	margin-top:10px;
+}
+.msg li{
+	margin-bottom:10px;
+	margin-left:15px;
+	margin-right:15px;
+	border: 1px solid #ccc;
+}
+.msg li .title{
+	height:25px;
+	background:#eee;
+	line-height:25px;
+	padding-left:15px;
+	border-bottom:1px solid #ccc;
+	color:#444;
+	position:relative;
+}
+.date{
+	font-size:12px;
+	margin-left:10px;
+	color:#999;
+}
+.msg li .content{
+	line-height:22px;
+	padding-left:15px;
+	color:#f60;
+}
+.msg li .content span{
+	color:#999;
+}
+.msg li b{
+	font-weight:normal;
+	color:#0d61bf;
+}
+a.repeat{
+	position:absolute;
+	right:10px;
+	top:2px;
+	font-size:12px;
+}
+a.dele{
+	position:absolute;
+	right:70px;
+	top:2px;
+	font-size:12px;
+}
+a.show{
+	position:absolute;
+	right:90px;
+	top:2px;
+	font-size:12px;	
+}
+a.status{
+	position:absolute;
+	right:150px;
+	top:2px;
+	font-size:12px;	
+}
+.sNone{
+	height:50px;
+	line-height: 50px;
+	text-indent:20px;
+}
+.updateDiago{
+	width:400px;
+	border:2px solid #ccc;
+	background:#fff;
+}
+.updateDiago p{
+	margin:auto 5px;
+	color:#444;
+}
+.red{
+	color:red;
+}
+.gray{
+	color:#999;
+}
+</style>
+<script>
+var aType = [];
+<?php foreach ($this->mSiteCfg['channels'] as $key => $item) {
+	echo "aType[" . $key . "] = {id:" . $key . ",name:'" . $item['name'] . "'};";
+}
+?>
+
+function showType(index)
+{
+	var sHtml = '<option value="">选择类型</option>';
+	for(var i=1,j=aType.length;i<j;i++)
+	{
+		sHtml += '<option value="'+aType[i].id+'"'+(index==aType[i].id?' selected="selected"':'')+'>'+aType[i].name+'</option>';
+	}
+	document.write(sHtml);
+}
+function showOneType(id)
+{
+	for(var i=1,j=aType.length;i<j;i++)
+	{
+		if(aType[i].id==id)
+		{
+			return aType[i].name;
+		}
+	}
+}
+</script>
+</head>
+<body>
+<?php if ($action == 'sublist') { ?>
+<div id="rightTop" style="height:85px;">
+	<p>纠错管理</p>
+	<ul class="subnav">
+		<li><span>管理</span></li>
+	</ul>
+	<p style="clear:both;">
+		<form name="search">
+			<input type="hidden" name="ac" value="sublist"/>
+			指定影片ID：<input type="text" name="vid" value="{$vid}" size="10"/>
+			内容：<input type"text" name="keywords" value="{$keywords}" size="60"/>
+			状态：<select name="query"><option value="">显示全部</option><option value="1" {$sels[0]}>已解决</option><option 
+value="2"{$sels[1]}>未解决</option></select>
+			<input type="submit" class="formbtn" value="搜索"/>
+		</form>	
+		<script>Router.bindForm(true, 'video', 'fixed', document.search)</script>
+	</p>
+</div>
+<ul class="msg">
+	<form name="deleform" action="<?php echo $this->mRouter->urlEx('video', 'fixed', array('ac' => 'dele'))?>" method="post">
+		{tag:Lamb_View_Tag_List id='list' prepare_source='$aPrepareSource' sql='@$sql@' is_page='1' page='@$page@' cache_time='-1' pagesize='20' empty_str='<li class="sNone">对不起，暂无纠错信息</li>'}
+		<li>
+			<div class="title"><input type="checkbox" name="vid[]" value="{field.id}"/>&nbsp;影片名：<a href="{field.videoid function="Ttkvod_Utils::U(array('keywords' => @this, 'query' => 'vedioid'), '', 'video')"}">{field.name}</a> 影片ID：<a href="{field.videoid function="Ttkvod_Utils::U(array('keywords' => @this, 'query' => 'vedioid'), '', 'video')"}" target="_blank">{field.videoid}</a> 状态：<a href="{field.id function="Ttkvod_Utils::U(array('ajaxAction' => 'fixfin', 'id' => @this, 'value' => @me['isFinish']), 'ajax', 'video')"}" {field.isFinish function=" @this ? 'class=gray' : 'class=red'"}>{field.isFinish function="@this ? '已解决' : '未解决'"}</a> <span 
+class="date">{field.intdate function="date('Y-m-d H:i:s', @this)"}</span><a class="repeat" href="
+{field.id function="Ttkvod_Utils::U(array('ac' => 'dele', 'vid' => @this), 'fixed', 'video')"}">删除</a></div>
+			<p class="content">
+				<span>常见错误：</span><br/>
+				{field.problems function="htmlentities(@this ? str_replace('|', '<br/>', @this) : '无', ENT_COMPAT, 'gb2312')"}
+				<br/><span>用户建议及其他描述：</span><br/>
+				{field.reslutions function="htmlentities(@this ? @this : '无', ENT_COMPAT, 'gb2312')"}
+				<br/><span>联系方式：</span><br/>
+				{field.contact function="htmlentities(@this ? @this : '无', ENT_COMPAT, 'gb2312')"}
+			</p>
+		</li>
+		{/tag:Lamb_View_Tag_List}
+	</form>
+		{tag:Lamb_View_Tag_Page listid='list'}	
+			<li style="border:none;"><div id="pageDiv"><span class="msg"><a href="javascript:checkAll('vid[]')">全
+选</a> <a href="javascript:confirm('确定删除吗?')?document.deleform.submit():void(0)">删除</a> 共#num#条数据 当前#currentPage#页</span><span class="page"><a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span></span></div></li>
+		{/tag:Lamb_View_Tag_Page}
+</ul>
+<?php } else { ?>
+<script>
+window.onload=function()
+{
+	var oTable=$A('distinction');
+	var aTdObjItem=oTable.getElementsByTagName('tr');
+	for (var i = 1,j = aTdObjItem.length-2 ;i < j;i++)
+	{
+		aTdObjItem[i].style.backgroundColor = ( i % 2 ) == 0? '#d9ebf5' : '#eee';
+	}
+}
+</script>
+<div id="rightTop" style="height:85px;">
+	<p>纠错管理</p>
+	<ul class="subnav">
+		<li><span>列表</span></li>
+	</ul>
+	<p style="clear:both;">
+		<form name="search">
+			搜索：
+			<input type="text" name="keywords" value="{$keywords}" size="50"/>
+			<select name="query">
+				<option value="vedioname" {$sels[0]}>指定影片名称</option>
+				<option value="vid"{$sels[1]}>指定影片ID</option>		
+			</select>
+			类型：
+			<select name="vedioType">
+				<script>showType({$videoType})</script>			
+			</select>
+			<input type="submit" class="formbtn" value="搜索"/>
+			<a href="<?php echo $this->mRouter->urlEx('video', 'fixed', array('ac' => 'sublist'))?>">查看所有错误</a>
+		</form>	
+		<script>Router.bindForm(true, 'video', 'fixed', document.search)</script>
+	</p>
+</div>
+<div class="info2" style="color:#444">
+	<table class="distinction" id="distinction">
+		<thead>
+			<tr>
+				<th width="100">影片ID</th>
+				<th>影片名称</th>
+				<th width="15%">影片类型</th>
+				<th width="100"><a href="<?php echo $publicUrl . $this->mRouter->url(array('ot' => 1))?>">错误总数</a></th>
+				<th width="15%"><a href="{$publicUrl}">最新纠错时间</a></th>
+				<th width="15%">查看详情</th>
+			</tr>
+		</thead>
+		<tbody>
+			{tag:Lamb_View_Tag_List prepare_source='@$aPrepareSource@' id='list' sql='@$sql@' is_page='1' page='@$page@' cacche_time='-1' pagesize='30' empty_str='<tr><td colspan="5" style="padding:20px">对不起，暂无数据</td></tr>'}
+					<tr>
+						<td><a href="{field.id function="Ttkvod_Utils::U(array('keywords' => @this, 'query' => 'vedioid'), '', 'video')"}" target="_blank">{field.id}</a></td>
+						<td>{field.name}</td>
+						<td><script>document.write(showOneType({field.topType}))</script></td>
+						<td>{field.num}</td>
+						<td>{field.intdate function="date('Y-m-d H:i:s',@this)"}</td>
+						<td><a href="{field.id function="Ttkvod_Utils::U(array('vid' => @this, 'ac' => 'sublist'), 'fixed', 'video')"}" target="_blank">查看详情</a></td>
+					</tr>
+			{/tag:Lamb_View_Tag_List}
+			{tag:Lamb_View_Tag_Page listid='list'}
+				<tr><td colspan="6"><div id="pageDiv"><span class="msg">共#num#条数据 当前#currentPage#页</span><span class="page">
+				<a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" 
+class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span><input type="text" size="2" value="#currentPage#" onblur="if(this.value && this.value!=#currentPage#){var s=location.href.replace(/&p\/[^&]*/gi,'');location.href=s+'/p/'+this.value}"/></div></td></tr>
+			{/tag:Lamb_View_Tag_Page}				
+		</tbody>
+		<tfoot>
+			<tr class="tr_pt10">
+				<td colspan="6"></td>
+			</tr>			
+		</tfoot>
+	</table>
+</div>
+<?php } ?>
+<iframe name="opFrame" id="opFrame" height="0" width="0"></iframe>
+</body>
+</html>

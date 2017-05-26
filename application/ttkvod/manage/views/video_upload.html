@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<script>
+try{
+document.domain	= 'ttkvod.com';
+}catch(e){}
+</script>
+<style>
+.img_status{
+	border:1px solid #ccc;
+	padding:10px;
+	display:none;
+}
+.img_status .i_s_wrap{
+	height:160px;
+}
+.img_status .i_s_wrap li{
+	float:left;
+	width:102px;
+	text-align:center;
+	margin:0 20px 20px 0;
+}
+.img_status .i_s_wrap li img{
+	border:1px solid #ccc;
+	width:100px;
+	height:120px;
+}
+</style>
+</head>
+<body>
+	
+	<table cellpadding="5" width="100%;" class="edit_table">
+		<tr>
+			<td class="right">影片图片：</td>
+			<td class="left">
+			<p style="clear:both">
+				<input class="input" id="site" style="width:500px" />
+				<input type="button" id="formbtn" class="formbtn" value="下载" />
+			</p>
+			<span id="u_status" style="color:red"></span>
+			</td>
+		</tr>		
+	</table>
+	<div class="img_status" id="img_status">
+		<ul class="i_s_wrap" id="i_s_wrap">
+			<li><img src="" /><p>电信图片</p></li>
+		</ul>
+		<p>图片路径：<input type="text" size="50" id="img_path" /></p>
+	</div>
+	<script>
+	
+	var formbtn = $A('formbtn');
+	
+	$E.addEvent(formbtn, 'click', function(){
+		var site = $A('site').value;
+		if(site == ''){
+			alert('图片地址错误!');
+			return;
+		}
+		
+		Ajax.script.get({
+			'url'	  :	 'http://111.74.238.198:802/?s=test/upload/site/' + encodeURIComponent(encodeURIComponent(site)) + '/tt/' + new Date().valueOf(),
+			'success' :	function(path){
+				uploadCallback(path);
+			}
+		});	
+	});
+	
+	function uploadCallback(path)
+	{
+		if (null === path) {
+			$A('u_status').innerHTML = '上传失败';
+		} else {
+		    path = 'http://img.ttkvod.com:81' + path;
+			$A('u_status').innerHTML = '上传成功';
+			var imgstatus = $A('img_status'),
+				imgs = imgstatus.getElementsByTagName('img');
+			imgstatus.style.display = 'block';
+			imgs[0].src = 
+			$A('img_path').value = path;
+		}
+	}
+	</script>
+<iframe name="opFrame1" id="opFrame1" height="500" width="100%" frameborder="0"></iframe>	
+</body>
+</html>

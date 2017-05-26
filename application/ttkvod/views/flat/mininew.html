@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="{$this->mSiteCfg['site_root']}mini/css/miniindex.css" rel="stylesheet"/>
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<script src="{$this->mSiteCfg['site_root']}mini/api/mini.js"></script>
+<title>最新看点</title>
+</head>
+
+<body>
+	<div class="w-content">
+		<div class="w-c-index">
+			<div class="clear w-c-top">
+				<ul class="w-c-movie clear line"> 
+					{tag:Lamb_View_Tag_List column='id, name, vedioPic, mark' cache_time="-1" table='vedio' order='updateDate desc' limit='4'}
+					<li>
+						<a class="img" href="javascript:;" title='{field.name}' onclick="openLocal({field.id})">
+							<img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" />
+							<p class="w-c-background"></p>
+							<p class="w-i-showinfo">{field.mark}</p>
+						</a>
+						<p class="w-c-name"><a href="#" title='{field.name}' onclick="openLocal({field.id})">{field.name}</a></p>
+					</li>
+					{/tag:Lamb_View_Tag_List}
+					
+				</ul>
+
+				<ul class="clear w-c-list">
+					{tag:Lamb_View_Tag_List column='id, name, vedioPic, mark' cache_time="-1" table='vedio' order='updateDate desc' offset='4' limit='12'}
+						<li><a href="#" title="{field.name}" onclick="openLocal({field.id})"><font>[{field.mark}]</font>{field.name}</a></li>
+					{/tag:Lamb_View_Tag_List}
+				</ul>
+			</div>
+		</div>
+		<div class="w-c-adv">
+			<!-- 广告位：迷你右侧 -->
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "869772";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+		</div>
+	</div>
+	<div class="w-adv" id="d">
+		<!-- 广告位：迷你底部 -->
+<script type="text/javascript" >BAIDU_CLB_SLOT_ID = "869782";</script>
+<script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+	</div>
+</body>
+</html>

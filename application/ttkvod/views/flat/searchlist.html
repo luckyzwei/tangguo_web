@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<title>{$keywords}_{$this->mSiteCfg['site_name']}</title>
+<meta name="shenma-site-verification" content="5f545f609549e1609ffc80987225d712_1486191571"> 
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<meta name="robots" content="nofollow">
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/list.css" rel="stylesheet">
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>Controllor.siteRoot='{$this->mSiteCfg['site_root']}';TTK.action.search()</script>
+</head>
+<body>
+<div class="w1180 clear">
+	{layout head_nav}
+	<div class="wrap">
+		{layout head_f}
+		<div class="frame" id="i_w_f">
+			<div class="body w960">
+				<div class="list-wrap clear">
+					<div class="list-sec">
+						<div id="ttk_search_top" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/search_top.js"></script></div>
+						<div class="list-head search-head clear">
+							<div class="l-h-tabs">
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 0, 'lid' => $typeid))?>" <?php if ($order=='0'){?>class="on"<?php }?>>按默认</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 3, 'lid' => $typeid))?>" <?php if ($order=='3'){?>class="on"<?php }?>>按时间</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 4, 'lid' => $typeid))?>" <?php if ($order=='4'){?>class="on"<?php }?>>周人气</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 5, 'lid' => $typeid))?>" <?php if ($order=='5'){?>class="on"<?php }?>>月人气</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 1, 'lid' => $typeid))?>" <?php if ($order=='1'){?>class="on"<?php }?>>总人气</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 6, 'lid' => $typeid))?>" <?php if ($order=='6'){?>class="on"<?php }?>>月评分</a>
+								<a href="<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => $auto, 'q' => $keywords, 'order' => 2, 'lid' => $typeid))?>" <?php if ($order=='2'){?>class="on"<?php }?>>高评分</a>
+							</div>
+						</div>				
+						<ul class="search-main m">
+							{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' prepare_source='@$aPrepareSource@' is_page='1' page='@$page@' pagesize='@$pagesize@' empty_str='<li class="none" style="display:block">对不起，未找到影片资源，请重选条件</li>' id='list' include_union='0'}
+							<li class="clear s-m-item">
+								<a class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}" router="static"><img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}"/><span class="mark">{field.mark}</span>{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}
+								</a>
+								<div class="s-txt">
+									<div class="s-t-title clear">
+										<h4><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a><span>({field.vedioYear})</span></h4>
+										<div class="s-t-type">{field.topType function="@this == 1 ? '电影' : (@this == 2 ? '电视剧' : (@this == 3 ? '综艺' : '动漫'))"}</div>
+									</div>
+									<ul class="clear s-t-tag">
+										<li class="l"><span>主演：</span>{field.actors function="Ttkvod_Utils::randerTag(@this, 0, false)"}</li>
+										<li><span id="s_tag">导演：</span>{field.directors function="Ttkvod_Utils::randerTag(@this, 0, false)"}</li>
+										<li class="l"><span>类型：</span>{field.vedioType function="Ttkvod_Utils::randerTag(@this, 0, false)"}</li>
+										<li><span>地区：</span>{field.area}</li>
+									</ul>
+									<div class="s-desc">{field.content function="preg_replace('/(<(\/)?[^>]*>)/is', '', Lamb_Utils::mbSubstr(@this, 0, 120))"}...</div>
+									<strong class="point">{field.point function="sprintf('%0.1f', @this)"}</strong>
+								</div>
+							</li>
+							{/tag:Lamb_View_Tag_List}
+						</ul>
+						<div class="page">
+							<div class="p_inner clear">
+								{tag:Lamb_View_Tag_Page listid='list'}							
+								<span class="p_info"><b>#currentPage#</b>/#pageCount#</span><span class="p_links"><a href="@$firstPageUrl@">首页</a>{pageitem focus='<a class="on">#page#</a>' nofocus='<a href="@$pageUrl@">#page#</a>'}<a href="@$lastPageUrl@">尾页</a></span><!--span class="p_input">转到<input type="text"/></span-->
+								{/tag:Lamb_View_Tag_Page}	
+							</div>
+						</div>
+					</div>
+					<div class="select-sec search-sec">
+						<div class="s-s-inner">
+							<div class="s-s-item s-item-head">
+								<div class="s-s-title">按分类筛选</div>
+								<dl class="s-s-sel clear">
+									<dd><a href="<?php echo $this->mLinkRouter->router('', $params)?>" <?php if (!$typeid){?>class="current"<?php }?>>全部</a></dd>
+									<dd><a href="<?php echo $this->mLinkRouter->router('', $params + array('lid' => 1))?>" <?php if ($typeid == '1'){?>class="current"<?php }?>>电影</a></dd>
+									<dd><a href="<?php echo $this->mLinkRouter->router('', $params + array('lid' => 2))?>" <?php if ($typeid == '2'){?>class="current"<?php }?>>电视剧</a></dd>
+									<dd><a href="<?php echo $this->mLinkRouter->router('', $params + array('lid' => 3))?>" <?php if ($typeid == '3'){?>class="current"<?php }?>>综艺</a></dd>
+									<dd><a href="<?php echo $this->mLinkRouter->router('', $params + array('lid' => 4))?>" <?php if ($typeid == '4'){?>class="current"<?php }?>>动漫</a></dd>
+								</dl>
+							</div>
+							<div class="spilter w"></div>	
+							<div class="s-s-item">
+								<div class="s-s-title">热搜明星</div>
+								<dl class="s-s-sel clear">
+									<?php foreach ($hotstars as $star) {?>
+									<dd><a href='<?php echo $this->mLinkRouter->router('', array('id' => 'search', 'auto' => 'tag', 'q' => $star))?>'>{$star}</a></dd>
+									<?php }?>
+								</dl>
+							</div>
+							<div id="ttk_search_right1" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/search_right1.js"></script></div>
+							<div id="ttk_search_right2" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/search_right2.js"></script></div>
+							<div id="ttk_search_right4" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/search_right4.js"></script></div>										
+						</div>
+					</div>
+				</div>
+			</div>
+			{layout bottom_f}
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+<script src="{$this->mSiteCfg['site_root']}ttk/tj.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>迷你编辑</title>
+<style>
+*{
+	margin:0; padding:0;
+	font-size:12px;
+}
+html{
+	overflow:hidden;
+}
+a{
+	text-decoration:none;
+	margin-left:10px;
+	display:inline-block;
+	padding:5px 10px;
+	text-align:center;
+	margin-top:3px;
+	color:#09f;
+}
+.w-head{
+	background-color:#ecf5ff;
+	height:30px;
+}
+.w-head .cur{
+	background-color:#0099FF;
+	color:#fff;
+}
+.w-body .text{
+	width:98%;
+	height:600px;
+	margin:10px;
+	font-size:14px;
+	font-family:微软雅黑;
+}
+input{
+	cursor:pointer;
+	height:30px;
+	width:80px;
+	line-height:20px;
+	margin-left:10px;
+}
+</style>
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="w-head">
+			<a href="{$modeUrl}lady" <?php echo $type == 'lady' ? 'class="cur"' : '';?>>女性</a>
+			<a href="{$modeUrl}shenqi" <?php echo $type == 'shenqi' ? 'class="cur"' : ''?>>神奇</a>
+			<a href="{$modeUrl}life" <?php echo $type == 'life' ? 'class="cur"' : ''?>>生活</a>
+			<a href="{$modeUrl}img" <?php echo $type == 'img' ? 'class="cur"' : ''?>>图片</a>
+			<a href="{$modeUrl}game" <?php echo $type == 'game' ? 'class="cur"' : ''?>>游戏</a>
+			<a href="{$modeUrl}text" <?php echo $type == 'text' ? 'class="cur"' : ''?>>小说</a>
+		</div>
+		<div class="w-body">
+			<form method="post" enctype="multipart/form-data" action="{$actionUrl}" onsubmit="return sunmit()">
+				<textarea class="text" id="text" name="h">{$html}</textarea>
+				<input type="submit" value="确认修改" hideFocus="true"/>
+			</form>
+		</div>
+	</div>
+</body>
+<script>
+function sunmit() 
+{
+	if (!confirm('确定要修改嘛？')) {
+		return false;
+	}
+}
+</script>
+</html>

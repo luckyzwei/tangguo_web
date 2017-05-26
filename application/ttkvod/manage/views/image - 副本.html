@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=gbk" />
+<link href="{$this->mThemePath}css/admin.css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/sub_page.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="<?php echo $this->mRouter->urlEx('index', 'loadjsconfig')?>"></script>
+<script src="{$this->mSiteRoot}api/global.js"></script>
+<style>
+	._diago{
+		width:600px;
+		margin-left:250px;
+		border:2px solid #ccc;
+		background:#fff;
+		min-width:350px;
+	}
+
+	.image_list li{
+		float:left;
+		height:180px;
+		padding:10px;
+		margin-left:5px;
+	}
+	
+	.image_list li img{
+		width:120px;
+		height:160px;
+	}
+	
+	.image_list .vname{
+		width:120px;
+		line-height:20px;
+		font-size:14px;
+		white-space:nowrap;
+		text-overflow:ellipsis; 
+		overflow:hidden;
+		text-align:center;
+		cursor:pointer;
+		margin-top:5px;
+	}
+	
+	.image_search{
+		width:auto;
+		height:25px;
+		line-height:25px;
+		padding:10px;
+	}
+	
+	.image_search input[type='text']{
+		width:280px;
+		height:18px;
+		line-height:18px;
+		margin:0 auto;
+	}
+	
+	.fl{
+		float:left;
+	}
+	.fr{
+		float:right;
+	}
+</style>
+<script>
+window.onload=function()
+{
+	var oTable=$A('distinction');
+	var aTdObjItem=oTable.getElementsByTagName('tr');
+ 
+	for (var i = 1,j = aTdObjItem.length-2 ;i < j;i++)
+	{
+		aTdObjItem[i].style.backgroundColor = ( i % 2 ) == 0? '#d9ebf5' : '#eee';
+	}
+	
+	var items = document.getElementsByName('importImage');
+	$F.each(items,function(it){
+		$E.addEvent(it,'click',function(){
+			var name = it.getAttribute('_name'),
+				id_value = it.getAttribute('id');
+			$B.ajax({
+				'url'	  :	Router.get('image', 'ajax', {'name' : name, 'tt' : new Date().valueOf()}),
+				'success' :	function(data){
+					try {
+						data = eval(data);
+					} catch (e) {
+						return ;
+					}
+					
+					var str='';
+					str+='<div class="_diago clear">';
+					str+='<form method="post" name="editform" target="opFrame" >';
+					str+='<div class="image_search"><div class="fl"><input type="text" id="searchValue" value="'+ name +'" name="vname" /><input type="button" id="search" class="formbtn" value="搜索" /></div><input type="button" id="dlg_close" class="formbtn fr" value="关闭"/></div>'
+					str+='<ul class="image_list clear" id="image_list" >'
+					
+					$F.each(data,function(s_item){
+						str+= '<li><a href="#" name="url_img_site" imgUrl="'+ s_item['url'] +'" ><img src="'+ s_item['img'] +'" /></a><div class="vname" title="'+ s_item['name'] +'">'+ s_item['name'] +'</div></li>';
+					});
+					str+='</ul></form></div>';
+					
+					var dialog = new $B.extend.CDialog({
+						'html' : str
+					});
+					dialog.showModalLess();
+							
+					var dlg_close = $A('dlg_close');
+					$E.addEvent(dlg_close, 'click',function(){
+						dialog.close();
+					});
+					
+					var btnSearch = $A('search');
+					$E.addEvent(btnSearch, 'click', function(){
+						var name   = $A('searchValue').value,
+							ulList = document.getElementById('image_list');
+						
+						$B.ajax({
+							'url'	  :	Router.get('image', 'ajax', {'name' : name, 'tt' : new Date().valueOf()}),
+							'success' :	function(data){
+								try {
+									data = eval(data);
+								} catch (e) {
+									return ;
+								}
+								
+								var str = '';
+								$F.each(data,function(s_item){
+									str+= '<li><a href="#" name="url_img_site" imgUrl="'+ s_item['url'] +'" ><img src="'+ s_item['img'] +'" /></a><div class="vname" title="'+ s_item['name'] +'"><a target="_blank" href="'+ s_item['url'] +'" />'+ s_item['name'] +'</a></div></li>';
+								});
+								ulList.innerHTML = '';
+								ulList.innerHTML = str;
+								
+								var urls = document.getElementsByName('url_img_site');
+								$F.each(urls,function(u_item){
+									$E.addEvent(u_item, 'click', function(){
+										var imgUrl = u_item.getAttribute('imgUrl');
+										$B.ajax({
+											'url'	  :	Router.get('image', 'ajaxImg', {'imgUrl' : imgUrl, 'tt' : new Date().valueOf()}),
+											'success' :	function(data){
+												Ajax.script.get({
+													'url'	  : 'http://img.ttkvod.com/?s=test/getImage/site/' + encodeURIComponent(encodeURIComponent(data)) + '/id/' + id_value,
+													'success' :	function(c){
+														if(c == 1){
+															alert('上传成功');
+															location.reload();
+														}else{
+															alert('上传失败');
+														}
+													}
+												});
+											}
+										});
+										
+									});
+								});
+							}
+						});
+					});
+					
+					var urls = document.getElementsByName('url_img_site');
+					$F.each(urls,function(u_item){
+						$E.addEvent(u_item, 'click', function(){
+							var imgUrl = u_item.getAttribute('imgUrl');
+							$B.ajax({
+								'url'	  :	Router.get('image', 'ajaxImg', {'imgUrl' : imgUrl, 'tt' : new Date().valueOf()}),
+								'success' :	function(data){
+									Ajax.script.get({
+										'url'	  : 'http://img.ttkvod.com/?s=test/getImage/site/' + encodeURIComponent(encodeURIComponent(data)) + '/id/' + id_value,
+										'success' :	function(c){
+											if(c == 1){
+												alert('上传成功');
+												location.reload();
+											}else{
+												alert('上传失败');
+											}
+										}
+									});
+								}
+							});
+							
+						});
+					});
+				}
+			});	
+		});
+	});
+}
+</script>
+</head>
+<body>
+<div id="rightTop" style="height:45px;">
+	<ul class="subnav">
+		<li><span>影片图片更新管理</span></li>
+	</ul>
+</div>
+<div class="info2" style="color:#444">
+	<table class="distinction" id="distinction">
+		<thead>
+			<tr>
+				<th width="20%">ID</th>
+				<th width="10%">影片名称</th>
+				<th width="10%">上传</th>
+				<th width="10%">导演</th>
+				<th width="10%">地区</th>
+				<th width="20%">日期</th>
+				<th width="10%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{tag:Lamb_View_Tag_List id='list' sql='@$sql@' is_page='1' cache_time='-1' page='@$page@' pagesize='25'  empty_str='<tr><td colspan="12" style="padding:20px">对不起，暂无数据</td></tr>'}
+					<tr>
+						<td name="item_#autoIndex#" id="item_#autoIndex#">{field.id}</td>
+						<td name="item_#autoIndex#" id="item_#autoIndex#">{field.name}</td>
+						<td><a href="javascript:void(0)" name="importImage" _name="{field.name}" id="{field.id}">图片入口</a></td>
+						<td>{field.directors}</td>
+						<td>{field.area}</td>
+						<td>{field.updateDate function="date('Y-m-d H:i:s', @this)"}</td> 
+						<td><a href="http://index.ttkvod.com:1880/?s=video/update/id/{field.id}" target="_self">编辑</a></td>
+					</tr>
+			{/tag:Lamb_View_Tag_List}			
+	
+			{tag:Lamb_View_Tag_Page listid='list'}
+				<tr><td colspan="10"><div id="pageDiv"><span class="msg">共#num#条数据 当前#currentPage#页</span><span class="page">
+				<a href="@$pageUrl@1" class="nofocus">首页</a><a href="@$pageUrl@#prevPage#" class="nofocus">上一页</a>
+				{pageitem focus='<a href="@$pageUrl@#page#" class="focus">#page#</a>' nofocus='<a href="@$pageUrl@#page#" class="nofocus">#page#</a>'}
+				<a href="@$pageUrl@#nextPage#" class="nofocus">下一页</a><a href="@$pageUrl@#lastPage#" class="nofocus">尾页</a>
+				</span></div></td></tr>
+			{/tag:Lamb_View_Tag_Page}					
+		</tbody>	
+	</table>
+</div>
+<iframe name="opFrame" id="opFrame" height="0" width="0"></iframe>
+</body>
+</html>

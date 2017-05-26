@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<title>热播榜_{$this->mSiteCfg['site_name']}</title>
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/index.css" rel="stylesheet">
+<meta name="robots" content="nofollow"> 
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>TTK.root='{$this->mSiteCfg['site_root']}';TTK.action.top()
+$B.ready(function(){
+	var btn = $A('a_11_11');
+	$E.addEvent(btn, 'click', function(e){
+		alert('活动于24日开始');
+	});
+});
+</script>
+</head>
+<body>
+<div class="w1180 clear">
+	{layout head_nav}
+	<div class="w1180">
+		{layout head_nav}
+		<div class="wrap">
+			{layout head_f}
+			<div class="frame" id="i_w_f">
+				<div class="body w960">
+					<div class="t-wrap clear">
+						<div class="t-w-menu">
+							<h3 class="t-w-head">排行榜分类</h3>
+							<ul class="mb10">
+								<li><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top'))?>"  <?php if(empty($id)){?>class="cur"<?php }?>>全部</a></li>
+								<li><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 1))?>" <?php if($id==1){?>class="cur"<?php }?>>电影</a></li>
+								<li><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 2))?>" <?php if($id==2){?>class="cur"<?php }?>>电视剧</a></li>
+								<li><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 4))?>" <?php if($id==4){?>class="cur"<?php }?>>动漫</a></li>
+								<li><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 3))?>" <?php if($id==3){?>class="cur"<?php }?>>综艺</a></li>
+							</ul>
+							<div id="ttk_top_left" align="center"><script src="{$this->mSiteCfg['site_root']}ttk/top_left.js"></script></div>
+						</div>	
+						
+						<div class="t-w-body">
+							<?php if (!$isall) {?>
+							<div class="t-item-wrap">
+								<h3 class="t-item-head"><span>{$this->mSiteCfg['channels'][$id]['name']}TOP50</span></h3>					
+								<ul class="t-item-list">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sqlitem@' limit='50' prepare_source='array(":tp" => array($id, PDO::PARAM_INT))' auto_index_prev='1'}
+									<li>
+										<span class="t-item-num top_r_#autoIndex#">#autoIndex#</span>
+										<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-image"><img  src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}"/></a>
+										<div class="t-item-info">
+											<p class="t-item-mName clear"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a><strong>{field.point function="sprintf('%0.1f', @this)"}</strong></p>
+											<p>主演：{field.actors}</p>
+											<p>类型：{field.vedioType}</p>
+											<p>地区：{field.area}</p>
+											<p>上映：{field.syDate}</p>
+										</div>
+									</li>
+									{/tag:Lamb_View_Tag_List}					
+								</ul>
+							</div>					
+							<?php } else {?>
+							<div class="t-w-b-item">
+								<h3 class="t-w-b-head"><span>电视剧热播榜</span><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 2))?>" hideFocus="true">TOP50>></a></h3>
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sqlNewTop@' limit='1' prepare_source='array(":tp" => array(2, PDO::PARAM_INT))'}	
+								<div class="t-i-topone">
+									<span class="t-i-l-num">1</span>
+									<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-image"><img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" /></a>
+									<div class="t-i-l-info">
+										<p><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></p>
+										<p class="t-i-l-actors">主演：{field.actors}</p>
+										<p>地区：{field.area}</p>
+										<p class="t-i-l-point">评分：<strong>{field.point function="sprintf('%0.1f', @this)"}</strong></p>
+										<p class="t-i-l-plot">{field.content function=" Lamb_Utils::mbSubstr(preg_replace('/(<(\/)?[^>]*>)/is', '', @this), 0, 120)"}</p>
+									</div>
+								</div>	
+								{/tag:Lamb_View_Tag_List}	
+								<ul class="t-i-list clear">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' limit='14' offset='1' prepare_source='array(":tp" => array(2, PDO::PARAM_INT))' auto_index_prev='2'}	
+									<li>
+										<div class="t-top-info">
+											<span class="t-i-l-num">#autoIndex#</span>
+											<div class="t-listname"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></div>	
+											<strong class="t-listPoint">{field.point function="sprintf('%0.1f', @this)"}</strong>
+										</div>
+									</li>
+									{/tag:Lamb_View_Tag_List}		
+								</ul>
+							</div>
+		
+							<div class="t-w-b-item">
+								<h3 class="t-w-b-head"><span>电影热播榜</span><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 1))?>" hideFocus="true">TOP50>></a></h3>
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sqlNewTop@' limit='1' prepare_source='array(":tp" => array(1, PDO::PARAM_INT))'}	
+								<div class="t-i-topone">
+									<span class="t-i-l-num">1</span>
+									<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-image"><img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" /></a>
+									<div class="t-i-l-info">
+										<p><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></p>
+										<p class="t-i-l-actors">主演：{field.actors}</p>
+										<p>地区：{field.area}</p>
+										<p class="t-i-l-point">评分：<strong>{field.point function="sprintf('%0.1f', @this)"}</strong></p>
+										<p class="t-i-l-plot">{field.content function=" Lamb_Utils::mbSubstr(preg_replace('/(<(\/)?[^>]*>)/is', '', @this), 0, 120)"}</p>
+									</div>
+								</div>	
+								{/tag:Lamb_View_Tag_List}	
+								<ul class="t-i-list clear">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' limit='14' offset='1' prepare_source='array(":tp" => array(1, PDO::PARAM_INT))' auto_index_prev='2'}	
+									<li>
+										<div class="t-top-info">
+											<span class="t-i-l-num">#autoIndex#</span>
+											<div class="t-listname"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></div>	
+											<strong class="t-listPoint">{field.point function="sprintf('%0.1f', @this)"}</strong>
+										</div>
+									</li>
+									{/tag:Lamb_View_Tag_List}		
+								</ul>
+							</div>
+		
+							<div class="t-w-b-item">
+								<h3 class="t-w-b-head"><span>动漫热播榜</span><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 4))?>" hideFocus="true">TOP50>></a></h3>
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sqlNewTop@' limit='1' prepare_source='array(":tp" => array(4, PDO::PARAM_INT))'}	
+								<div class="t-i-topone">
+									<span class="t-i-l-num">1</span>
+									<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-image"><img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" /></a>
+									<div class="t-i-l-info">
+										<p><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></p>
+										<p class="t-i-l-actors">主演：{field.actors}</p>
+										<p>地区：{field.area}</p>
+										<p class="t-i-l-point">评分：<strong>{field.point function="sprintf('%0.1f', @this)"}</strong></p>
+										<p class="t-i-l-plot">{field.content function=" Lamb_Utils::mbSubstr(preg_replace('/(<(\/)?[^>]*>)/is', '', @this), 0, 120)"}</p>
+									</div>
+								</div>	
+								{/tag:Lamb_View_Tag_List}	
+								<ul class="t-i-list clear">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' limit='14' offset='1' prepare_source='array(":tp" => array(4, PDO::PARAM_INT))' auto_index_prev='2'}	
+									<li>
+										<div class="t-top-info">
+											<span class="t-i-l-num">#autoIndex#</span>
+											<div class="t-listname"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></div>	
+											<strong class="t-listPoint">{field.point function="sprintf('%0.1f', @this)"}</strong>
+										</div>
+									</li>
+									{/tag:Lamb_View_Tag_List}		
+								</ul>
+							</div>
+		
+							<div class="t-w-b-item">
+								<h3 class="t-w-b-head"><span>综艺热播榜</span><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'top', 'vid' => 3))?>" hideFocus="true">TOP50>></a></h3>
+								{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sqlNewTop@' limit='1' prepare_source='array(":tp" => array(3, PDO::PARAM_INT))'}	
+								<div class="t-i-topone">
+									<span class="t-i-l-num">1</span>
+									<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-image"><img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}" /></a>
+									<div class="t-i-l-info">
+										<p><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></p>
+										<p class="t-i-l-actors">主演：{field.actors}</p>
+										<p>地区：{field.area}</p>
+										<p class="t-i-l-point">评分：<strong>{field.point function="sprintf('%0.1f', @this)"}</strong></p>
+										<p class="t-i-l-plot">{field.content function=" Lamb_Utils::mbSubstr(preg_replace('/(<(\/)?[^>]*>)/is', '', @this), 0, 120)"}</p>
+									</div>
+								</div>	
+								{/tag:Lamb_View_Tag_List}	
+								<ul class="t-i-list clear">
+									{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' limit='14' offset='1' prepare_source='array(":tp" => array(3, PDO::PARAM_INT))' auto_index_prev='2'}	
+									<li>
+										<div class="t-top-info">
+											<span class="t-i-l-num">#autoIndex#</span>
+											<div class="t-listname"><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="t-i-l-name">{field.name}</a></div>	
+											<strong class="t-listPoint">{field.point function="sprintf('%0.1f', @this)"}</strong>
+										</div>
+									</li>
+									{/tag:Lamb_View_Tag_List}		
+								</ul>
+							</div>
+							<?php }?>																		
+						</div>		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+<script src="{$this->mSiteCfg['site_root']}ttk/tj.js"></script>
+</body>
+</html>

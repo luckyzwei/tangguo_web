@@ -1,0 +1,23 @@
+	<div class="v-i-list">
+		<ul class="clear">
+			{tag:Lamb_View_Tag_List prepare_source='@$aPrepareSource@' sql='@$sql@' is_page='1' page='@$page@' pagesize='10' empty_str='<li class="v-i-none">暂无收藏</li>' id='list'}
+			<li>
+				<a href="{field.vedioId function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="v-i-img" title="{field.vedioName}">
+					<img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}"/>
+					<span title="删除" class="v-i-l-del" i="{field.vedioId}" name="del" id="del"></span>
+					<span class="v-i-l-status">{field.mark}</span>
+				</a>
+				<p><a title="{field.vedioName}" href="{field.vedioId function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="v-i-name">{field.vedioName function="Lamb_Utils::mbSubstr(@this, 0, 10)"}</a></p>
+				<p class="v-i-time">{field.date function="date('Y-m-d',strtotime(@this))"}</p>
+			</li>
+			{/tag:Lamb_View_Tag_List}
+		</ul>
+	</div>
+	<div class="v-i-page">
+		{tag:Lamb_View_Tag_Page listid='list'}
+		<span>共#num#条数据</span>
+		<a href="@$firstPageUrl@" hideFocus="true">首页</a>
+		{pageitem focus='<a href="@$pageUrl@" class="v-i-p-cur">#page#</a>' nofocus='<a href="@$pageUrl@">#page#</a>'}
+		<a href="@$lastPageUrl@" hideFocus="true">尾页</a>
+		{/tag:Lamb_View_Tag_Page}
+	</div>

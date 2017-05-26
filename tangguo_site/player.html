@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<title>player</title>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+
+<div style="width:680px;height:490px;margin:10px auto;">
+ 
+	
+	<script language="javascript">
+		
+		function getRequest() { 
+			var url = location.search; 
+			var theRequest = new Object(); 
+			
+			if (url.indexOf("?") != -1) { 
+				var str = url.substr(1); 
+				strs = str.split("&"); 
+				for(var i = 0; i < strs.length; i ++) { 
+					theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); 
+				}	 
+			}
+			
+			return theRequest; 
+		}
+		
+		var urlObj = getRequest();
+		var XgPlayer = {
+			"Url": urlObj.p_url,  //本集播放地址，需更改
+			"NextcacheUrl": "",  //缓冲下一集，需更改
+			"LastWebPage": "",
+			"NextWebPage": "",  //下一集播放页面地址，需更改
+			"Buffer": "/ads.html",  // 播缓冲AD，需更改
+			"Pase": "/ads.html",  // 暂停AD，需更改
+			"Width": 680,   // 播放器显示宽度
+			"Height": 490,  // 播放器显示高度
+			"Second": 8,  // 缓冲时间
+			"Installpage":""
+		};
+	</script>
+	<script language="javascript" src="/themes/js/m_xiguaplayer.js" charset="gbk"></script>
+</div>
+</body>
+</html>

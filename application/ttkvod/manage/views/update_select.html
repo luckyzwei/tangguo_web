@@ -1,0 +1,192 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link href="{$this->mThemePath}css/public.css" type="text/css" rel="stylesheet" />
+<link href="{$this->mThemePath}css/source_editor.css" rel="stylesheet" />
+<script src="{$this->mSiteRoot}api/lamb.js"></script>
+<script src="{$this->mSiteRoot}api/base.js"></script>
+<style>
+body{font-family:"微软雅黑";}
+.ch_area{zoom:1;}
+.col_bar{
+	margin:0 15px 5px;
+	zoom:1;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+}
+.col_bar li{
+	float:left;
+	margin-right:5px;
+}
+.col_bar li label{margin-left:5px;}
+.ch_area li{
+	margin:0 15px 5px;
+	border-bottom:1px solid #ccc;
+	zoom:1;
+	padding-bottom:5px;
+}
+.ch_area li.ch-area-title{
+	color:#0099cc;
+	font-size:14px;
+	line-height:30px;
+}
+.ch_area li label,.ch_area li .ch-area-info{
+	float:left;
+}
+.ch_area li label{
+	width:50px;
+	text-align:right;
+	display:block;
+	margin-right:10px;
+}
+.ch_area li .ch-area-info{
+	zoom:1;
+}
+.ch_area li .ch-area-info span{
+	float:left;
+	font-weight:bold;
+	color:#0099CC;
+	margin-right:5px;
+}
+.ch_area li .ch-area-info .ch-area-info-inner{
+	float:left;
+}
+.pt-list dd{
+	width:100%;
+	margin-bottom:5px;
+	padding-bottom:5px;
+	zoom:1;
+}
+.bd_btn{border:none;}
+.loadding{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color:#000;
+	filter:alpha(opacity=20);
+	left:0;
+	top:0;
+	display:none;
+}
+.uInput{
+	width:400px;
+	
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="result_title"><h4>选择要修改的字段</h4></div>
+	<div class="col_wrap">
+		<form name="ch_frm">
+			<input type="hidden" name="id" value="{$id}"/>
+			<!--input type="hidden" name="action" value="{$action}"/>
+			<input type="hidden" name="key" value="{$key}"/-->
+		<ul class="col_bar">
+			<li><input type="checkbox" name="ch" id="ch_all" onClick="selectAll(this)"><label for="ch_all">选择所有</label></li>
+			<li><input type="checkbox" name="reme" id="reme"/><label for="reme">记住我的选择</label></li>
+		</ul>
+		<ul class="ch_area">
+			<li class="ch-area-title"><h4>{$data['name']}</h4></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="pic"/></label><div class="ch-area-info"><span>图片</span><div class="ch-area-info_inner"><img src="{$data['pic']}" id="pic"/></div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="actors"/></label><div class="ch-area-info"><span>演员</span><div id="actors" class="ch-area-info-inner">{$data['actors']}</div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="directors"/></label><div class="ch-area-info"><span>导演</span><div id="directors" class="ch-area-info-inner">{$data['directors']}</div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="showyear"/></label><div class="ch-area-info"><span>年份</span><div id="showyear" class="ch-area-info-inner">{$data['showyear']}</div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="area"/></label><div class="ch-area-info"><span>地区</span><div id="area" class="ch-area-info-inner">{$data['area']}</div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="type"/></label><div class="ch-area-info"><span>类型</span><div id="type" class="ch-area-info-inner">{$data['type']}</div></div></li>			
+			<li><label><input type="checkbox" name="chs" id="chs" value="typetag"/></label><div class="ch-area-info"><span onclick="copyTypetag()" style="cursor:pointer" title="复制到类型栏">看点</span><div id="typetag" class="ch-area-info-inner">{$data['typetag']}</div></div></li>
+			<li><label><input type="checkbox" name="chs" id="chs" value="description"/></label><div class="ch-area-info"><span>简介</span><div id="description" class="ch-area-info-inner">{$data['description']}</div></div></li>
+			<?php 
+				foreach(array('pc', 'web') as $key) {
+				$name = $key == 'pc' ? '软件' : '网页';
+				if(isset($data[$key . '_column'])) {
+				$item = $data[$key . '_column'];
+			?>
+			<?php }}?>
+			<li class="btn_area"><input type="button" name="update_btn" class="bd_btn" id="update_btn" value="更新选中"/></li>			
+		</ul>
+		</form>
+	</div>
+</div>
+<div class="loadding" id="loadding"></div>
+<script>
+function copyTypetag()
+{
+	$A('type').innerHTML = $A('typetag').innerHTML;
+}
+(function(){
+	var arr = [$A('actors'), $A('directors'),$A('showyear'),$A('area'),$A('type'),$A('typetag'),$A('description')],
+		domCheckAll = $A('ch_all'),
+		domUpdateBtn = $A('update_btn'),
+		domReme = $A('reme'),
+		domCheckBoxs = document.getElementsByName('chs'),
+		expired = 24 * 3600 * 30,
+		checkRemes = $C.get('remeCheck');
+			
+		
+	domReme.checked = $C.get('reme') != 'true' ? false : true;
+	
+	if (checkRemes != '') {
+		eval('var tempRemes=' + checkRemes);
+		$F.each(domCheckBoxs, function(item){
+			item.checked = tempRemes[item.value] != 'true' ? false : true;
+		});
+	}
+
+	$E.addEvent(domUpdateBtn, 'click', function(){
+		var uData = {},
+			cookieReme = {};
+		$F.each(domCheckBoxs, function(item){
+			if (item.checked) {
+				if (item.value == 'pic') {
+					uData['data[' + item.value + ']'] = $A(item.value).src;
+				} else {
+					uData['data[' + item.value + ']'] = $A(item.value).innerHTML;
+				}	
+			}
+			if (domReme.checked) {
+				cookieReme[item.value] = item.checked ? 'true' : 'fasle';
+			} else {
+				cookieReme[item.value] = 'fasle';
+			}
+			$C.set('remeCheck', $B.json.stringify(cookieReme), expired);
+		});
+
+		$B.ajax({
+			'url' : parent.Router.get('update', 'quick', {'id' : document.ch_frm.id.value}),
+			'type' : 'POST',
+			'params' : uData,
+			'success' : function(s) {
+				s == 'succ' ? msgBox.show({type : 'succ', msg : '更新成功'}) : msgBox.show({type : 'error', msg : '更新失败'});
+			}
+		});
+	});
+	
+	$E.addEvent(domReme, 'click', function() {
+		domReme.checked ? $C.set('reme', 'true', expired) : $C.set('reme', 'false', expired);
+	});
+		
+	Ttk.lib.textInput({
+		'eventSource' 	 : arr,
+		'editorProperty' : {
+			'className'  : 'uInput'	
+		},
+		'onfinish' : function(value, eventSource, orival){
+			eventSource.innerHTML = value;
+		}
+	});
+	
+})();
+
+function selectAll(obj)
+{
+	var domInputs = document.getElementsByName('chs');
+	$F.each(domInputs, function(item){
+		item.checked = obj.checked;
+	});
+}
+</script>
+</body>
+</html>

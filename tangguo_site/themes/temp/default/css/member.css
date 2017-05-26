@@ -1,0 +1,151 @@
+@import url("public.css");
+.main{
+	background:url(../images/list_bg.png) repeat-y;
+}
+.notice{
+	color:#fc8b07;
+}
+.notice span{
+	margin-right:5px;
+}
+.submenu{
+	padding-top:10px;
+	width:180px;
+	float:left;
+}
+.submenu h2,.submenu li{
+	background:url(../images/bg.png) no-repeat; left top;
+}
+.submenu h2{
+	background-position:0px -1220px;
+	background-repeat:repeat-x;
+	/*border:#e4e4e4 1px solid;*/
+	padding:10px 0px 0px 0px;
+	text-align:center;
+	height:29px;
+	font-size:14px;
+	color:#afafaf;
+}
+.submenu li{
+	padding:1px;
+	height:30px;
+	border-bottom:#252525 1px solid;
+	background-position:-88px -265px;
+}
+.submenu li a{
+	padding:8px 0px 0px 30px;
+	display:block;
+	height:22px;
+	border-bottom:#2e2e2e 1px solid;
+}
+.submenu li .on{
+	position:relative;
+	padding-right:2px;
+	background:#fff;
+	color:#ff5b01;
+	font-weight:bold;
+	margin-right:-2px;
+}
+.hotmain{
+	padding-top:10px;
+	width:750px;
+	float:right;
+}
+
+.hotmain .setting{
+	border:#434343 1px solid;
+	background:#2f2f2f;
+	padding:20px;
+	font-size:14px;
+	margin-top:10px;
+}
+.hotmain .setting b{
+	color:#fc8b07;
+}
+.hotmain .nav-first{
+	background:#363636;
+	height:30px;
+	zoom:1;
+	font-size:14px;
+	margin-bottom:10px;
+	border-bottom:3px #999 solid;
+}
+.hotmain .nav-first ul{
+	float:left;
+}
+.hotmain .nav-first ul li{
+	float:left;
+	height:30px;
+}
+.hotmain .nav-first ul li a{
+	display:block;
+	text-align:center;
+	border-right:#2e2e2e 1px solid;
+	float:left;
+	height:22px;
+	padding-left:18px;
+	padding-right:18px;
+	padding-top:8px;
+}
+.hotmain .nav-first ul li.current{
+	background:#999;
+	font-weight:bold;
+}
+.hotmain .nav-first ul li.current a{
+	color:#333;
+}
+.hotmain table{
+	border-spacing:0;
+	border-collapse:collapse;
+}
+.hotmain .m{
+	font-size:14px;
+	font-weight:bold;
+	color:#fff;
+}
+.hotmain table td{
+	padding:3px;
+}
+.mod_pagenav{
+	border:none;
+	padding:0px;
+	text-align:left;
+}
+.inner_search{
+	background:#2f2f2f;
+	height:45px;
+	vertical-align:top;
+}
+.inner_search span{
+	margin-top:16px;
+	display:inline;
+	float:left;
+}
+.inner_search .t1,.inner_search .t5{
+	margin-left:5px;
+	margin-right:5px;
+}
+.inner_search input{
+	margin-top:16px;
+	display:inline;
+	float:left;
+	_margin-top:13px;
+}
+.inner_search input.text{
+	border:#2f2f2f 1px solid;
+	padding:2px 0px 1px 2px;
+	margin-top:12px;
+	width:100px;
+	height:16px;
+	background:#999;
+}
+.inner_search button{
+	margin-top:11px;
+	margin-left:5px;
+}
+.inner_search .inner_submit{
+	border:none;
+	/*padding:2px;*/
+	background:#4a4a4a;
+	color:#999;
+}

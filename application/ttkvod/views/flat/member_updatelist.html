@@ -1,0 +1,31 @@
+			<div class="v-i-list">
+				<ul class="clear">
+					<?php if ($ac == 'new') {?>
+						<?php if ($newUpdateNum > 0) {
+							foreach ($newUpdateData as $item) {
+						?>
+						<li>
+							<a href="<?php echo Ttkvod_Utils::UR('item', array('id' => $item['id']))?>" class="v-i-img" title="{$item['name']}" class="v-i-img">
+								<img src="<?php echo Ttkvod_Utils::getImgPath($item['vedioPic'])?>"/>
+								<span class="v-i-l-status">{$item['mark']}</span>
+							</a>
+							<p><a href="<?php echo Ttkvod_Utils::UR('item', array('id' => $item['id']))?>" class="v-i-name" title="{$item['name']?>"><?php echo Lamb_Utils::mbSubstr($item['name'], 0, 10)?></a></p>
+							<p class="v-i-time"><?php echo date('Y-m-d H:i:s', $item['updateDate'])?></p>
+						</li>	
+						<?php }} else {?>
+						<li class="v-i-none">暂无更新影片</li>	
+					<?php }} else {?>
+					{tag:Lamb_View_Tag_List prepare_source='@$aPrepareSource@' cache_time='-1' sql='@$sql@' empty_str='<li class="v-i-none">暂无通知列表</li>'}
+					<li>
+						<a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="v-i-img" title="{field.name}" class="v-i-img">
+							<img src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}"/>
+							<span title="删除" class="v-i-l-del" i="{field.id}" name="del" id="del"></span>
+							<span class="v-i-l-status">{field.mark}</span>
+						</a>
+						<p><a href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" class="v-i-name" title="{field.name}">{field.name function="Lamb_Utils::mbSubstr(@this, 0, 10)"}</a></p>
+						<p class="v-i-time">{field.time function="date('Y-m-d H:i:s', @this)"}</p>
+					</li>	
+					{/tag:Lamb_View_Tag_List}				
+					<?php }?>
+				</ul>
+			</div>

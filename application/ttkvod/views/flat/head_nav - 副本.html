@@ -1,0 +1,45 @@
+	
+			<li><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 2))?>" class="current"<?php }?> hideFocus="true">电视剧</a></li>
+			<li><a router="static" href="" <?php if (($this->mDispatcher->setOrGetControllor() == 'list' && $id==1)||($this->mDispatcher->setOrGetControllor() == 'item'&&$info['topType']=='1')){?>class="current"<?php }?> hideFocus="true">电影</a></li>
+			<li><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 3))?>" <?php if (($this->mDispatcher->setOrGetControllor() == 'list' && $id==3)||($this->mDispatcher->setOrGetControllor() == 'item'&&$info['topType']=='3')){?>class="current"<?php }?> hideFocus="true">综艺</a></li>
+			<li><a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => 4))?>" <?php if (($this->mDispatcher->setOrGetControllor() == 'list' && $id==4)||($this->mDispatcher->setOrGetControllor() == 'item'&&$info['topType']=='4')){?>class="current"<?php }?> hideFocus="true">动漫</a></li>
+			<li><a router="static" href="<?php echo $this->mLinkRouter->router('', array('id' => 'top'))?>" <?php if ($this->mDispatcher->setOrGetControllor() == 'index' && $this->mDispatcher->setOrGetAction() == 'top') {?>class="current"<?php }?> hideFocus="true">排行榜</a></li>
+		</ul>
+		<script src="{$this->mSiteCfg['site_root']}ttk/ttk_nav_left.js"></script>
+	</div>
+	
+	
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		  <div class="container container-1000">
+		
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse">
+		      <ul class="nav navbar-nav">
+		        <li <?php if ($this->mDispatcher->setOrGetControllor() == 'index' && !in_array($this->mDispatcher->setOrGetAction(), array('top', 'pannel'))){?>class="active"<?php }?>>
+					<a router="static" href="<?php echo $this->mLinkRouter->router('', array('id' => 'index'))?>" hideFocus="true">首页</a>
+				</li>
+		        
+				<li <?php if (($this->mDispatcher->setOrGetControllor() == 'list' && $id==2)||($this->mDispatcher->setOrGetControllor() == 'item'&&$info['topType']=='2')){?>class="active"<?php }?>>
+					<a href="<?php echo $this->mLinkRouter->router('list', array('id' => 1))?>">电视剧</a>
+				</li>
+				<li>
+					<a href="#">电影</a>
+				</li>		       
+				<li><a href="#">综艺</a></li>		       
+				<li><a href="#">动漫</a></li>		       
+				<li><a href="#">排行榜</a></li>		       
+				<li><a href="#">直播</a></li>		       
+		      </ul>
+		      
+		      <form class="form-inline pull-right">
+			  	<div class="form-group has-success has-feedback" style="margin-top: 8px;">
+				    <input type="text" class="form-control" style="width: 300px;" id="inputSuccess4" aria-describedby="inputSuccess4Status">
+				    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+			  	</div>
+			  	<button class="btn btn-default glyphicon glyphicon-user" style="margin-left:20px;margin-top: 8px;">登录</button>
+			  	<button class="btn btn-default glyphicon glyphicon-time" style="margin-top: 8px;">历史纪录</button>
+			  </form>
+		      
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>

@@ -1,0 +1,49 @@
+					<div class="v-i-head">
+						<a hideFocus="true" id="h-mine" href="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'want'))?>" class="cur">我的求片</a>
+						<a hideFocus="true" href="#" id="h-puc">求片发布</a>
+					</div>
+					<div class="v-want">
+						<div id="v-w-list" name="v-w-list">
+							<ul class="v-w-list" id="v-w-list" name="v-w-list">
+								{tag:Lamb_View_Tag_List sql='@$sql@' is_page='1' page='@$page@' pagesize='10' cache_time="-1" empty_str='<li class="v-i-none">对不起，您还没有发布想看的电影</li>' id='list'}
+								<li class="line">
+									<div class="l-head">
+										<p class="h-vname">
+											<span class="t">影片名：</span>
+											<span>{field.vname}</span>
+										</p>
+										<span class="h-time t">{field.date function="date('Y-m-d H:i:s',@this)"}</span>
+										<a href="{field.id function="Ttkvod_Utils::U(array('i' => @this), 'del', 'member')"}" class="l-del" title="删除"></a>
+									</div>
+									<div class="l-body">
+										<p><span class="t">影片信息地址：</span>{field.url function="empty(@this) ? '无' : @this"}</p>
+										<p><span class="t">影片信息：</span>{field.notes function="empty(@this) ? '无' : @this"}</p>
+										<p><span class="t">回复内容：</span>{field.ext function="empty(@this) ? '暂无回复' : @this"}</p>
+									</div>
+								</li>
+								{/tag:Lamb_View_Tag_List}
+							</ul>
+							
+							<div class="v-i-page">
+								{tag:Lamb_View_Tag_Page listid='list'}
+								<span>共#num#条数据</span>
+								<a href="@$firstPageUrl@" hideFocus="true">首页</a>
+								{pageitem focus='<a href="@$pageUrl@" class="v-i-p-cur">#page#</a>' nofocus='<a href="@$pageUrl@">#page#</a>'}
+								<a href="@$lastPageUrl@" hideFocus="true">尾页</a>
+								{/tag:Lamb_View_Tag_Page}
+							</div>
+						</div>
+						
+						<div class="v-w-publish" style="display: none;" id="v-w-publish" name="v-w-publish">
+							<form name="send_frm" method="post" action="<?php echo $this->mLinkRouter->router('', array('id' => 'member', 'action' => 'want'))?>" target="opframe">
+							<ul>
+								<li class="line">影片名称：<input type="text" name="want[vname]" class="s1" /><span style="color: #ff6600">*</span></li>
+								<li class="line">影片链接：<input type="text" name="want[vurl]" class="s1" /><span class="n">影片信息地址，如：http://www.360kan.com/m/hKTlY0T6SHnATh.html</span></li>
+								<li class="line2 t">影片说明：<textarea id="v-notes" name="want[vnotes]"></textarea><span class="n">影片描述，如：类型，导演，演员等相关信息</span></li>
+								<li class="line t">
+									<input type="submit" value="提交" class="sub" />
+								</li>	
+							</ul>
+							</form>
+						</div>
+					</div>

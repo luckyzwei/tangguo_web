@@ -1,0 +1,36 @@
+	<div class="head">
+		<div class="h-inner">
+			<ul class="h-fun">
+				<li><a href="#" hideFocus="true" title="后退" class="h-f-back ic" id="btn_back">后退</a></li>
+				<li><a href="#" hideFocus="true" title="刷新" class="h-f-refresh ic" id="btn_fresh">刷新</a></li>
+			</ul>
+			<div class="h-search">
+				<form name="search_frm">
+				<div class="h-s-wrap">
+					<input type="text" autocomplete="off" maxlength="40" name="q" class="h-s-input">
+					<span class="h-s-btn" id="s_b"></span>
+				</div>
+				</form>
+				<div class="sear-his" id="s_h_p">
+					<div class="s-h-list" id="s_h_l"></div>
+					<div class="s-h-bar clear" id="s_c_d"><a href="#" class="s-h-btn-dele" title="清空搜索记录" hideFocus="true" id="s_c">清空搜索记录</a><a href="#" class="s-h-btn-forbin" hideFocus="true" id="s_n">不保存搜索记录</a></div>
+				</div>
+				<div class="sear-his search-list" id="s-s-list" style="display:none"></div>
+			</div>
+			
+			<ul class="h-user">
+				<li><a href="#" router="member" class="h-u-user-status h-user-m h-user-m-l" id="btn-user-status" title="用户中心" hideFocus="true">登录</a></li>
+				<li> 
+					<a href="#" class="h-u-play-history h-user-m " id="btn_history" hideFocus="true">历史记录</a>
+					<div class="user_operate_list" id="listHistroy_cont" style="display:none">
+						<div class="u_o_l_cont" id="his_wrap">
+							<div class="u_o_l_c_localnone" id="his_none"></div>
+							<dl class="u_o_l_c_list" id="his_list_cont" style="display:none"></dl>
+						</div>
+						<div class="u_o_l_foot"><span id="his_foot"></span><a id="his_btn_clear" href="#" class="u-o-clear" hideFocus='true'>清空记录</a></div>
+					</div>					
+				</li>
+			</ul>
+			
+		</div>
+	</div>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<title>{$topTypeInfos['name']}_{$this->mSiteCfg['site_name']}</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/list.css" rel="stylesheet">
+<meta name="robots" content="nofollow">
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>Controllor.siteRoot='{$this->mSiteCfg['site_root']}';TTK.action.list();</script>
+</head>
+<body>
+<div class="w1180 clear">
+	{layout head_nav}
+	<div class="wrap">
+		{layout head_f}
+		<div class="frame" id="i_w_f">
+			<div class="body w960">
+				<div class="list-wrap clear">
+					<div class="list-sec">
+						<div id="ttk_list_top"><script src="{$this->mSiteCfg['site_root']}ttk/list_top.js"></script></div>
+						<div class="list-head clear">
+							<div class="l-h-tabs">
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 0, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='0'){?>class="active"<?php }?>>按更新</a>
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 3, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='3'){?>class="on"<?php }?>>周人气</a>
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 4, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='4'){?>class="on"<?php }?>>月人气</a>
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 1, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='1'){?>class="on"<?php }?>>总人气</a>
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 5, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='5'){?>class="on"<?php }?>>月评分</a>
+								<a router="static" href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'order' => 2, 'area' => $area, 'tag' => $tag, 'year' => $year, 'pinyin' => $pinyin))?>" <?php if($order=='2'){?>class="on"<?php }?>>总评分</a>
+							</div>
+							<a class="top_next_btn" href="#" id="btn_next_page" p="{$page}">下一页</a>
+						</div>
+						<ul class="list-main clear">
+							<!-- movie item -->
+							{tag:Lamb_View_Tag_List cache_callback='@$this->mCacheCallback@' cache_time='@$this->mCacheTime@' cache_type='@$this->mCacheType@' sql='@$sql@' is_page='1' pagesize='30' page='@$page@' empty_str='<li class="l-m-none">对不起，未找到影片资源，请重选条件</li>' prepare_source='@$aPrepareSource@' id='list'}
+								<li>
+									<a router="static" class="pic" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}" title="{field.name}">
+										<img src="@$this->mBlankImgPath@" _src="{field.vedioPic function="Ttkvod_Utils::getImgPath(@this)"}"/>
+										{field.mark function="Ttkvod_Utils::isHD(@this, @me['name'])"}
+										<span class="mark"><strong>{field.point function="sprintf('%0.1f', @this)"}</strong>{field.mark}</span>
+									</a>
+									<p class="pic_txt"><a router="item" href="{field.id function="Ttkvod_Utils::UR('item', array('id' => @this))"}">{field.name}</a></p>
+									<p class="actor pic_txt" >{field.actors function="Ttkvod_Utils::randerTag(@this, 0, false)"}</p>
+								</li>
+							{/tag:Lamb_View_Tag_List}
+							<!--/movie item -->
+						</ul>
+						<div class="page">
+	
+							<div class="p_inner clear">
+								{tag:Lamb_View_Tag_Page listid='list'}						
+								<span class="p_info"><b>#currentPage#</b>/#pageCount#</span><span class="p_links"><a href="@$firstPageUrl@">首页</a><a href="@$prevPageUrl@" title="快捷键←">上一页</a>{pageitem focus='<a class="on">#page#</a>' nofocus='<a href="@$pageUrl@">#page#</a>'}<a href="@$nextPageUrl@" title="快捷键→">下一页</a><a href="@$lastPageUrl@">尾页</a></span><span class="p_input">转到<input type="text" id="btn_go_page"/></span>
+								{/tag:Lamb_View_Tag_Page}	
+							</div>
+						</div>
+					</div>
+					<div class="select-sec">
+						<div class="s-s-inner">
+							<div class="s-s-item w">
+								<h4 class="s-s-all"><a href="<?php echo $this->mLinkRouter->router('list', array('id' => $id))?>"  <?php if (empty($tag) && empty($area) && empty($year)){?>class="current"<?php }?>>全部影片</a></h4>
+							</div>
+							<div class="spilter w"></div>
+							<div class="s-s-item">
+								<div class="s-s-title">类型</div>
+								<dl class="s-s-sel clear">
+									<dd><a router='static'<?php if(empty($tag)){?> class="current"<? }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'area' => $area, 'order' => $order, 'year' => $year, 'pinyin' => $pinyin))?>">全部</a></dd>
+									<?php foreach ($currentSearchIndex['types'] as $type) {
+										$_type = $type;
+										if ($type == '音乐MV') {
+											$type = '音乐';
+										}
+										if ($type == '综艺其它') {
+											$type = '综艺';
+										}
+										$class = '';
+										if ($_type == $tag) {
+											$class = ' class="current"';
+										}
+										$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $type, 'p' => 1, 'area' => $area, 'year' => $year, 'order' => $order, 'pinyin' => $pinyin));
+									?>
+										<dd><a router='static' title="{$type}" href="{$link}"{$class}>{$type}</a></dd>
+									<?php }?>
+								</dl>
+							</div>
+							<div class="spilter w"></div>
+							<div class="s-s-item">
+								<div class="s-s-title">地区</div>
+								<dl class="s-s-sel clear">
+								<dd><a router='static'<?php if(empty($area)){?> class="current"<? }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'order' => $order, 'year' => $year, 'pinyin' => $pinyin))?>">全部</a></dd>
+								<?php foreach ($currentSearchIndex['areas'] as $item) { 
+									$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'area' => $item, 'year' => $year, 'order' => $order, 'pinyin' => $pinyin));
+									$class = '';
+									if ($item == $area) {
+										$class = ' class="current"';
+									}
+								?>
+								<dd><a router='static' href='{$link}'{$class}>{$item}</a></dd>
+								<?php }?>					
+								</dl>						
+							</div>
+							<div class="spilter w"></div>
+							<div class="s-s-item mb10">
+								<div class="s-s-title">年份</div>
+								<dl class="s-s-sel clear">
+								<dd><a router='static'<?php if(empty($year)){?> class="current"<? }?> href="<?php echo $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'order' => $order, 'area' => $area, 'pinyin' => $pinyin))?>">全部</a></dd>
+								<?php foreach ($currentSearchIndex['years'] as $item) { 
+									$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'area' => $area, 'year' => $item, 'order' => $order, 'pinyin' => $pinyin));
+									$class = '';
+									if ($item == $year) {
+										$class = ' class="current"';
+									}
+								?>	
+									<dd><a router='static' href='{$link}'{$class}>{$item}</a></dd>
+								<?php }?>				
+								</dl>						
+							</div>
+							<div class="spilter w"></div>
+							<div class="s-s-item">
+								<div class="s-s-title">拼音</div>
+								<dl class="s-s-sel-p clear">
+									<?php foreach ($searchIndex[5] as $item) { 
+										$link = $this->mLinkRouter->router('list', array('id' => $id, 'tag' => $tag, 'area' => $area, 'year' => $year, 'order' => $order, 'pinyin' => $item));
+										$class = '';
+										if ($item == $pinyin) {
+											$class = ' class="current"';
+										}
+									?>
+									<dd><a router='static' href='{$link}'{$class}>{$item}</a></dd>
+									<?php }?>
+								</dl>
+							</div>
+							<div id="ttk_list_right1" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/list_right1.js"></script></div>
+							<div id="ttk_list_right2" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/list_right2.js"></script></div>
+							<div id="ttk_list_right4" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/list_right4.js"></script></div>					
+						</div>
+					</div>
+				</div>
+			</div>
+			{layout bottom_f}
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+<script src="{$this->mSiteCfg['site_root']}ttk/tj.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" class="flatskin">
+<head>
+<title>{$info['name']}_{$this->mSiteCfg['site_name']}</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312"/>
+<meta http-equiv="x-ua-compatible" content="ie=7">
+<link href="{$this->mRuntimeThemeUrl}css/default_skin.css" rel="stylesheet">
+<link href="{$this->mRuntimeThemeUrl}css/item.css" rel="stylesheet">
+<script src="{$this->mSiteCfg['site_root']}api/lamb.min.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/config.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/qrcode.js"></script>
+<script src="{$this->mSiteCfg['site_root']}api/base.js"></script>
+<meta name="Keywords" content="{$this->mSiteCfg['site_keywords']}" />
+<meta name="robots" content="nofollow">
+<meta name="description" content="{$this->mSiteCfg['site_description']}" />
+<!--[if IE 6]>   
+<script type="text/javascript" src="{$this->mSiteCfg['site_root']}api/backgroundpng.js" ></script>   
+<![endif]-->
+<script>g_aCfg.is_url_encode={$this->mSiteCfg['is_url_encode']};Controllor.siteRoot='{$this->mSiteCfg['site_root']}';TTK.action.item({$id}, {$info['topType']}, '<?php echo $this->addslashes($info['name']);?>', {$mobileMovieId})</script>
+</head>
+<body>
+<div class="w1180 clear">
+	{layout head_nav}
+	<div class="wrap">
+		{layout head_f}
+		<div class="frame" id="i_w_f">
+			<div class="body w960">
+				<div class="position clear">
+					<div class="pos-info">当前位置：<span></span><a href="<?php echo $this->mLinkRouter->router('', array('id' => 'index'))?>">首页</a><span>></span><a href="<?php echo $this->mLinkRouter->router('list', array('id' => $info['topType']))?>">{$typename}</a><span>></span><span>{$info['name']}</span><div id="ttk_item_mini"><script src="/ttk/item_mini.js"></script></div></div>
+				</div>
+				<div class="minfos">
+					<div class="m-inner">
+						<div class="m-infos clear">
+							<div class="m-i-pic"><img src="{$this->mBlankImgPath}" _src="<?php echo Ttkvod_Utils::getImgPath($info['vedioPic']) ?>" alt="{$info['name']}"/></div>
+							<div class="m-info">
+								<div class="m-title">{$info['name']}<span id="mark">[{$info['mark']}]</span></div>
+								<div class="m-tag"><span>主演：</span><?php Ttkvod_Utils::randerTag($actors)?></div>
+								<ul class="clear m-tags">
+									<li class=""><span>导演：</span><?php Ttkvod_Utils::randerTag($directors)?></li>
+									<li class="l"><span>类型：</span><?php Ttkvod_Utils::randerTag($types)?></li>
+									<li class="gray"><span>上映：</span>{$info['syDate']}</li>
+									<li class="l gray"><span>地区：</span>{$info['area']}</li>
+								</ul>
+								<div class="m-comment"><span class="utime">更新：</span><span>评论：</span><a href="#com-flag" class="m-c-btn" id="btn-want-commented" hideFocus="true">我要评论(<b id="comm-num">0</b>)</a></div>
+								<div class="m-fpoint clear">
+									<span>我来评分：</span>
+									<div class="m_p_starbox" id="point_stars">
+										<a href="#" title="2分 太差了" hideFocus="true" class="s10">1</a>
+										<a href="#" title="4分 一般般啦。" hideFocus="true" class="s20">2</a>
+										<a href="#" title="6分 还不错哦~" hideFocus="true" class="s30">3</a>
+										<a href="#" title="8分 值得一看!" hideFocus="true" class="s40">4</a>
+										<a href="#" title="10分 一定要看!" hideFocus="true" class="s50">5</a>
+									</div>
+								</div>							
+								<div class="m-funcs clear"><a href="#" class="m-f-fav" id="btn-fav" hideFocus="true">收藏</a><a href="#" class="m-f-notice deep" hideFocus="true" id="btn-notice">更新通知我</a><a hideFocus="true" href="#" class="m-f-disk" hideFocus="true" id="btn-adddisk">添加到桌面</a><a hideFocus="true" href="#" class="m-f-refresh deep" id="btn-refresh">查询更新</a><a href="#" class="m-f-fix" hideFocus="true" id="btn-fix">纠错</a></div>
+							</div>
+							<div class="m-point">
+								<div class="m-p-info"><strong id="point-cont">{$points[0]}<em>.{$points[1]}</em></strong>分</div>
+								<div class="m-p-num">(<span id="point-num">{$info['pointNum']}</span>人评)</div>						
+							</div>
+							<div class="m-qrcode">
+								<div class="m-q-qrcode" id="m-q-qrcode"></div>
+								<p class="m-q-text" >用天天看APP</p>
+								<p class="m-q-text" >扫码观看此片</p>
+							</div>
+						</div>	
+						<div class="m-btns">
+							<div class="m-b-wrap clear">
+								<a href="#" class="m-b-play" id="m-b-play" hideFocus="true">全部播放</a>
+								<a href="#" class="m-b-down" id="m-b-down" hideFocus="true">离线下载</a>
+								<div class="m-gemo" id="m-gemo"></div>
+							</div>
+						</div>
+					</div>
+					<div class="info-box-ad" id="ttk_item_play"><script src="{$this->mSiteCfg['site_root']}ttk/item_play.js"></script></div>
+				</div>
+				<div class="playinfos">
+					<div class="pi-inner">
+						<div class="p-tabs clear">
+							<div class="p-t-func" id="p-t-func"></div>
+							<div class="p-t-menus" id="p-t-menus"></div>
+						</div>
+						<script>{$playData};g_VideoName='<?php echo $this->addslashes($info['name']);?>'</script>
+						<div class="p-links clear" id="p-links">正在载入...</div>
+					</div>
+					<div class="down-menus clear" id="down-menus"><a href="#" id="d-m-btnall" class="d-m-btnall" hideFocus="true">全选</a><a href="#" class="d-m-btncan" id="d-m-btncan" hideFocus="true">取消</a><a href="#" id="d-m-btndown" hideFocus="true">下载选中</a></div>				
+				</div>
+				<div id="ttk_item_middle" class="mb10"><script src="{$this->mSiteCfg['site_root']}ttk/item_middle.js"></script></div>
+				<div class="mdesc">
+					<div class="md-title"><h4>剧情介绍</h4></div>
+					<div class="md-info">
+						<?php
+							$info['content'] = $this->filterContent($info['content']);
+							$desclen = Lamb_Utils::mbLen($info['content']);
+							$maxdesclen = 185;
+							if ($desclen >= $maxdesclen) {
+						?>
+						<span><?php echo Lamb_Utils::mbSubstr($info['content'], 0, $maxdesclen)?>...</span><a href="#" class="md-switch" hideFocus="true" id="btn_desc_switch">展开</a><span class="none">{$info['content']}</span>
+						<?php } else {?>
+						<span>{$info['content']}</span>
+						<?php }?>				
+					</div>
+				</div>	
+				<div class="relamovie">
+					<div class="rm-tabs clear" id="rm_tabs">
+						<a href="#" class="on" hideFocus="true"><span>您可能也喜欢</span></a>
+						<a href="#" hideFocus="true"><span>同导演</span></a>
+						<a href="#" class="last" hideFocus="true"><span>同主演</span></a>
+					</div>
+					<div class="rm-body" id="rm_body"><a name="com-flag"></a>
+						<ul class="rm-b-list clear">
+							<?php foreach ($referLists['vedioType'] as $item) {?>
+							<li>
+								<a title="{$item['name']}" router="static" href="<?php echo $this->mLinkRouter->router('item', array('id' => $item['id']))?>" class="pic"><img src="{$this->mBlankImgPath}" _src="<?php echo Ttkvod_Utils::getImgPath($item['vedioPic'])?>"/></a>
+								<p class="pic_txt"><a router="static" href="<?php echo $this->mLinkRouter->router('item', array('id' => $item['id']))?>">{$item['name']}</a></p>
+							</li>						
+							<?php }?>																						
+						</ul>
+						<?php foreach (array('directors', 'actors') as $key) {?>
+						<ul class="rm-b-list clear" style="display:none">
+						<?php foreach ($referLists[$key] as $item) {?>
+							<li>
+								<a title="{$item['name']}" router="static" href="<?php echo $this->mLinkRouter->router('item', array('id' => $item['id']))?>" class="pic"><img src="{$this->mBlankImgPath}" _src="<?php echo Ttkvod_Utils::getImgPath($item['vedioPic'])?>"/></a>
+								<p class="pic_txt"><a router="static" href="<?php echo $this->mLinkRouter->router('item', array('id' => $item['id']))?>">{$item['name']}</a></p>
+							</li>					
+						<?php }?>
+						</ul>
+						<?php }?>
+					</div>
+				</div>
+				<div class="comment" id="comment">
+					<div class="com-title clear" id="com-title"><a href="#" class="on" i='1' hideFocus="true">最新评论</a><a href="#" i='2' hideFocus="true">最热评论</a></div>
+					<div class="com-wrap" id="com-wrap">
+						<div class="com-body" id="com-body"><div class="com-loadding">正在载入......</div></div>
+						<div class="com-page" id="com-page"></div>					
+					</div>
+					<div class="com-frm"><a name="com-flag"></a>
+						<form method="post" name="comment_frm">
+							<input type="hidden" name="tt" value="{$info['updateDate']}"/>
+							<textarea name="com_cont"></textarea>
+							<div class="c-f-bar"><div class="c-f-b-status">文明社会，从理性发贴开始。谢绝地域攻击</div><a href="#" class="c-f-submit" hideFocus="true" id="com_frm_sbt">发表</a></div>
+						</form>
+					</div>
+				</div>
+				<div id="ttk_item_bottom" class="mb10"><script src="/ttk/item_bottom.js"></script></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>T.action.loader()</script>
+<script src="{$this->mSiteCfg['site_root']}ttk/tj.js"></script>
+</body>
+</html>

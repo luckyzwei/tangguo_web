@@ -1,0 +1,331 @@
+@import url("public.css");
+#ttk_list_top{
+	margin:10px 0;
+}
+.list-wrap .list-sec {
+	float: left;
+	width: 728px;
+	overflow: hidden
+}
+
+.list-wrap .select-sec {
+	float: right;
+	width: 220px;
+	padding-bottom: 10px
+}
+
+.list-main {
+	margin-bottom: 20px;
+	width:780px;
+}
+
+.list-main li {
+	float: left;
+	margin-right: 27px;
+	margin-bottom: 20px;
+	_margin-right: 0;
+	_padding-right: 27px
+}
+
+.list-main li .pic_txt {
+	text-align: left;
+	width: 116px;
+	height: 21px;
+	line-height: 21px;
+	padding-top: 2px
+}
+
+.list-main li .mark strong {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	font-weight: bold;
+	color: #f60
+}
+
+.list-main .l-m-none {
+	text-align: center;
+	margin: 0;
+	float: none;
+	margin-top: 40px
+}
+
+.list-head {
+	margin: 0 0 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid
+}
+
+.list-head .top_next_btn {
+	float: right;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	padding: 5px 20px;
+	margin-top: 10px
+}
+
+.list-head .top_next_btn:hover {
+	text-decoration: none
+}
+
+.list-head .l-h-tabs {
+	overflow: hidden;
+	height: 40px;
+	float: left
+}
+
+.list-head .l-h-tabs a {
+	float: left;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	padding: 10px;
+	font-size: 14px
+}
+
+.list-head .l-h-tabs a.on {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	position: relative;
+	top: 0;
+	height: 19px;
+	_top: 0
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.list-head .l-h-tabs a.on {
+		height: 16px
+	}
+}
+
+.list-head .l-h-tabs a:hover {
+	text-decoration: none
+}
+
+.s-s-inner .w {
+	margin: 0 10px
+}
+
+.s-s-inner .spilter {
+	height: 1px;
+	margin-bottom: 10px;
+	overflow: hidden
+}
+
+.s-s-inner .s-s-all {
+	padding: 8px 0;
+	font-size: 14px
+}
+
+.s-s-sel .s-s-sel-p {
+	padding: 4px 0;
+	margin-left: 10px
+}
+
+.s-s-sel dd {
+	float: left;
+	width: 50px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center
+}
+
+.s-s-sel dd a {
+	font-size: 14px
+}
+
+.s-s-item .s-s-title {
+	/*border-left-width: 3px;
+	border-left-style: solid;*/
+	padding-left: 5px;
+	font-size: 12px
+}
+.s-s-item .s-s-title .s-s-title-d{
+	width:15px;
+	height:10px;
+	*+height:16px;
+	display:inline-block;
+	background:url(../images/newicons.png) no-repeat 0 0;
+	background-position:0 -328px;
+	_background-position:0 -324px;
+}
+
+.s-s-sel-p dd {
+	float: left;
+	width: 35px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center
+}
+
+.s-s-sel-p dd a {
+	font-size: 14px
+}
+
+.s-s-sel-p dd .current {
+	color: #09f
+}
+
+.big-page {
+	margin-bottom: 20px
+}
+
+
+
+.search-main {
+	margin-bottom: 20px
+}
+
+.search-main .pic {
+	float: left;
+	margin-right: 20px
+}
+
+.search-main .s-txt {
+	float: left;
+	position: relative;
+	width: 540px
+}
+
+.searhc-main .s-t-tag {
+	float: left
+}
+
+.search-main .s-txt .point {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 16px
+}
+
+.search-main .s-t-title {
+	margin-bottom: 10px;
+	width: 100%;
+	overflow: hidden
+}
+
+.search-main .none {
+	text-align: center;
+	font-size: 14px;
+	color: #999;
+	line-height: 60px;
+	height: 60px
+}
+
+.search-main .s-t-title h4 {
+	float: left;
+	font-size: 16px
+}
+
+.search-main .s-desc {
+	line-height: 23px
+}
+
+.search-main .s-t-title h4 span {
+	margin-left: 2px
+}
+
+.search-main .s-t-title .s-t-type {
+	float: left;
+	margin: 4px 0 0 4px
+}
+
+.search-main .s-t-tag {
+	margin-bottom: 5px
+}
+
+.search-main .s-t-tag li {
+	float: left;
+	margin-bottom: 5px
+}
+
+.search-main .s-t-tag li.l {
+	width: 300px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.s-m-item {
+	padding: 20px 0;
+	border-bottom-width: 1px;
+	border-bottom-style: solid
+}
+
+.page {
+	margin-bottom: 20px
+}
+
+.p_inner {
+	margin: 0 20px;
+	text-align: center;
+	height: 34px;
+	overflow: hidden
+}
+
+.p_inner .p_links a,.p_inner .p_info,.p_inner .p_input {
+	display: inline-block;
+	height: 100%;
+	line-height: 34px;
+	padding: 0 12px;
+	font-size: 14px
+}
+
+.p_inner .p_input {
+	position: relative;
+	width: 58px;
+	text-align: left
+}
+
+.p_inner .p_input input {
+	width: 26px;
+	border: 0;
+	line-height: 16px;
+	height: 16px;
+	padding: 4px 0;
+	margin: 0 4px;
+	overflow: hidden;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center
+}
+
+.p_inner .p_info b {
+	margin-right: 2px
+}
+
+.p_inner .p_links a:hover {
+	text-decoration: none
+}
+
+.p_inner .p_links a.on {
+	font-weight: bold
+}
+
+.s-item-head {
+	margin-top: 10px
+}
+
+.search-sec .s-s-item .s-s-title {
+	padding-left: 17px
+}
+
+.search-sec .s-s-item .s-s-sel {
+	margin-left: 20px
+}
+
+.search-sec .s-s-item .s-s-sel dd {
+	text-align: left
+}
+
+#ttk_list_right1,#ttk_list_right2,#ttk_list_right4,#ttk_search_right1,#ttk_search_right2,ttk_search_right4 {
+	text-align: center
+}
+
+.body {
+	padding-bottom: 10px
+}
